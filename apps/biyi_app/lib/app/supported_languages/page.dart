@@ -4,7 +4,7 @@ import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:biyi_app/widgets/language_label/language_label.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class SupportedLanguagesPage extends StatefulWidget {
   const SupportedLanguagesPage({
@@ -37,8 +37,7 @@ class _SupportedLanguagesPageState extends State<SupportedLanguagesPage> {
         t.app.supported_languages.title,
       ),
       actions: [
-        Button(
-          variant: ButtonVariant.filled,
+        Button.primary(
           onPressed: _handleClickOk,
           child: Text(t.ok),
         ),

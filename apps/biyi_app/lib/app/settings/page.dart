@@ -2,7 +2,7 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/utils/utils.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -27,7 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   version: sharedEnv.appVersion,
                   buildNumber: '${sharedEnv.appBuildNumber}',
                 ),
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).typography.base,
               ),
             ),
           ],

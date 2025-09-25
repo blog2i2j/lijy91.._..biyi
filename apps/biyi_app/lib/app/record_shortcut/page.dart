@@ -2,7 +2,7 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class RecordShortcutPage extends StatefulWidget {
   const RecordShortcutPage({
@@ -39,7 +39,7 @@ class _RecordShortcutPageState extends State<RecordShortcutPage> {
             margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               borderRadius: BorderRadius.circular(2),
             ),
@@ -68,8 +68,7 @@ class _RecordShortcutPageState extends State<RecordShortcutPage> {
           t.app.record_shortcut.title,
         ),
         actions: [
-          Button(
-            variant: ButtonVariant.filled,
+          Button.primary(
             onPressed: _handleClickOk,
             child: Text(t.ok),
           ),

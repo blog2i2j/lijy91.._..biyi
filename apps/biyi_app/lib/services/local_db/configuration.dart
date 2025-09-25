@@ -6,8 +6,14 @@ import 'package:biyi_app/services/local_db/local_db.dart';
 import 'package:biyi_app/utils/language_util.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_platform/uni_platform.dart';
+
+const Map<String, ThemeMode> kKnownThemeModes = <String, ThemeMode>{
+  'light': ThemeMode.light,
+  'dark': ThemeMode.dark,
+  'system': ThemeMode.system,
+};
 
 @Deprecated('No longer used.')
 class Configuration {

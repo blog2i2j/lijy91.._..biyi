@@ -9,7 +9,7 @@ import 'package:biyi_app/widgets/translation_engine_icon/translation_engine_icon
 import 'package:biyi_app/widgets/translation_engine_name/translation_engine_name.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:shortid/shortid.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
@@ -103,8 +103,7 @@ class _TranslationEnginesNewOrEditPageState
           : Text(t.app.translation_engines_new.title),
       actions: [
         if (widget.editable)
-          Button(
-            variant: ButtonVariant.filled,
+          Button.primary(
             onPressed: _handleClickOk,
             child: Text(t.ok),
           ),
@@ -152,12 +151,12 @@ class _TranslationEnginesNewOrEditPageState
             children: [
               for (var scope in TranslationEngineScope.values)
                 ListTile(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    left: 12,
-                    right: 12,
-                  ),
+                  // padding: const EdgeInsets.only(
+                  //   top: 10,
+                  //   bottom: 10,
+                  //   left: 12,
+                  //   right: 12,
+                  // ),
                   title: Text(
                     'engine_scope.${scope.name.toLowerCase()}',
                   ),
@@ -180,7 +179,7 @@ class _TranslationEnginesNewOrEditPageState
                 ListTile(
                   title: TextField(
                     controller: _textEditingControllerMap[optionKey],
-                    placeholder: optionKey,
+                    placeholder: Text(optionKey),
                     onChanged: (value) {
                       _option[optionKey] = value;
                       setState(() {});

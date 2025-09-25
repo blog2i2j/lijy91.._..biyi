@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 @Deprecated('No longer used.')
 const kPreferenceTypeInt = 'int';
 @Deprecated('No longer used.')
@@ -69,13 +67,6 @@ const kShortcutExtractFromScreenCapture =
 const kShortcutExtractFromClipboard = 'shortcut_extract_from_clipboard';
 @Deprecated('No longer used.')
 const kShortcutTranslateInputContent = 'shortcut_translate_input_content';
-
-@Deprecated('No longer used.')
-const Map<String, ThemeMode> kKnownThemeModes = <String, ThemeMode>{
-  'light': ThemeMode.light,
-  'dark': ThemeMode.dark,
-  'system': ThemeMode.system,
-};
 
 @Deprecated('No longer used.')
 class UserPreference {

@@ -2,7 +2,7 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class AboutSettingPage extends StatefulWidget {
   const AboutSettingPage({super.key});

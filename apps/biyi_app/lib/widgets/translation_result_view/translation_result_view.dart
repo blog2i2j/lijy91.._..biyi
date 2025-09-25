@@ -1,7 +1,7 @@
 import 'package:biyi_app/models/translation_result.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class TranslationResultView extends StatelessWidget {
   const TranslationResultView(
@@ -20,7 +20,7 @@ class TranslationResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
+      // margin: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           Padding(
@@ -38,7 +38,7 @@ class TranslationResultView extends StatelessWidget {
               child: Icon(
                 FluentIcons.arrow_right_20_regular,
                 size: 16,
-                color: themeData.iconTheme.color,
+                color: themeData.colorScheme.foreground,
               ),
             ),
           ),

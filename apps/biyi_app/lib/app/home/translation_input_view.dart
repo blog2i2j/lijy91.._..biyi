@@ -4,8 +4,9 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/models/settings_base.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:reflect_ui/reflect_ui.dart';
 import 'package:screen_capturer/screen_capturer.dart';
+import 'package:uikit/uikit.dart' hide Tooltip;
+import 'package:flutter/material.dart' show Tooltip;
 
 class TranslationInputView extends StatelessWidget {
   const TranslationInputView({
@@ -44,7 +45,7 @@ class TranslationInputView extends StatelessWidget {
   final bool isAddedToVocabulary = true;
 
   Widget _buildToolbarItems(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
     return GappedRow(
       gap: 6,
       children: [
@@ -53,12 +54,9 @@ class TranslationInputView extends StatelessWidget {
             mode: translationMode.displayName,
           ),
           child: Button(
-            kind: translationMode == TranslationMode.auto
-                ? ButtonKind.primary
-                : ButtonKind.secondary,
-            variant: ButtonVariant.muted,
-            padding: const EdgeInsets.all(0),
-            iconSize: 22,
+            style: translationMode == TranslationMode.auto
+                ? ButtonVariance.primary
+                : ButtonVariance.secondary,
             child: Builder(
               builder: (context) {
                 return Stack(
@@ -72,7 +70,7 @@ class TranslationInputView extends StatelessWidget {
                         bottom: 0,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: theme.colorScheme.primary,
+                            color: themeData.colorScheme.primary,
                             borderRadius: BorderRadius.circular(2),
                           ),
                           padding: const EdgeInsets.only(
@@ -111,11 +109,7 @@ class TranslationInputView extends StatelessWidget {
         ),
         Tooltip(
           message: t.app.home.tip_extract_text_from_screen_capture,
-          child: Button(
-            kind: ButtonKind.secondary,
-            variant: ButtonVariant.muted,
-            padding: const EdgeInsets.all(0),
-            iconSize: 22,
+          child: Button.secondary(
             onPressed: onClickExtractTextFromScreenCapture,
             child: const Icon(
               FluentIcons.crop_20_regular,
@@ -124,11 +118,7 @@ class TranslationInputView extends StatelessWidget {
         ),
         Tooltip(
           message: t.app.home.tip_extract_text_from_clipboard,
-          child: Button(
-            kind: ButtonKind.secondary,
-            variant: ButtonVariant.muted,
-            padding: const EdgeInsets.all(0),
-            iconSize: 22,
+          child: Button.secondary(
             onPressed: onClickExtractTextFromClipboard,
             child: const Icon(
               FluentIcons.clipboard_text_ltr_20_regular,
@@ -145,16 +135,14 @@ class TranslationInputView extends StatelessWidget {
       children: [
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 56),
-          child: Button(
-            variant: ButtonVariant.outlined,
+          child: Button.secondary(
             onPressed: onButtonTappedClear,
             child: Text(t.app.home.btn_clear),
           ),
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 56),
-          child: Button(
-            variant: ButtonVariant.filled,
+          child: Button.secondary(
             onPressed: onButtonTappedTrans,
             child: Text(t.app.home.btn_trans),
           ),
@@ -165,14 +153,14 @@ class TranslationInputView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final themeData = Theme.of(context);
     return Card(
-      margin: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 0,
-        bottom: 12,
-      ),
+      // margin: const EdgeInsets.only(
+      //   left: 12,
+      //   right: 12,
+      //   top: 0,
+      //   bottom: 12,
+      // ),
       child: Column(
         children: [
           Container(
@@ -192,13 +180,15 @@ class TranslationInputView extends StatelessWidget {
                     top: 14,
                     bottom: 12,
                   ),
-                  style: textTheme.bodyMedium?.copyWith(
+                  style: themeData.typography.base.copyWith(
                     height: 1.2,
                   ),
-                  placeholder: t.app.home.input_hint,
-                  placeholderStyle: textTheme.bodyMedium?.copyWith(
-                    color: textTheme.bodyMedium?.color?.withOpacity(0.5),
-                    height: 1.2,
+                  placeholder: Text(
+                    t.app.home.input_hint,
+                    style: themeData.typography.base.copyWith(
+                      color: themeData.typography.base.color?.withOpacity(0.5),
+                      height: 1.2,
+                    ),
                   ),
                   maxLines: inputSubmitMode == InputSubmitMode.enter ? 1 : 6,
                   minLines: 1,
@@ -215,21 +205,21 @@ class TranslationInputView extends StatelessWidget {
                     bottom: 0,
                     child: Container(
                       padding: const EdgeInsets.only(left: 12, right: 12),
-                      color: Theme.of(context).canvasColor,
+                      color: themeData.colorScheme.background,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Row(
                             children: [
                               SpinKitDoubleBounce(
-                                color: textTheme.bodySmall!.color,
+                                color: themeData.typography.small.color,
                                 size: 18.0,
                               ),
                               const SizedBox(width: 6),
                               Text(
                                 t.app.home.text_extracting_text,
                                 style: TextStyle(
-                                  color: textTheme.bodySmall!.color,
+                                  color: themeData.typography.small.color,
                                   fontSize: 13,
                                 ),
                               ),

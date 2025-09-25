@@ -2,7 +2,7 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/services/api_client.dart';
 import 'package:biyi_app/utils/utils.dart';
 import 'package:flutter/gestures.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewVersionFoundBanner extends StatelessWidget {
@@ -15,9 +15,9 @@ class NewVersionFoundBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
     return Container(
-      color: Theme.of(context).primaryColor,
+      color: themeData.colorScheme.primary,
       width: double.infinity,
       child: Container(
         width: double.infinity,
@@ -40,7 +40,7 @@ class NewVersionFoundBanner extends StatelessWidget {
                   version: latestVersion.version,
                 ),
               ),
-              style: theme.typography.bodyMedium.copyWith(
+              style: themeData.typography.base.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
               ),
@@ -71,7 +71,7 @@ class NewVersionFoundBanner extends StatelessWidget {
                   ),
                 ],
               ),
-              style: theme.typography.bodyMedium.copyWith(
+              style: themeData.typography.base.copyWith(
                 color: Colors.white,
               ),
             ),

@@ -2,7 +2,7 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 
 import 'package:launch_at_startup/launch_at_startup.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class AdvancedSettingPage extends StatefulWidget {
   const AdvancedSettingPage({super.key});

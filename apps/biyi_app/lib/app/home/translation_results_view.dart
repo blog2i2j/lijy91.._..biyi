@@ -4,7 +4,7 @@ import 'package:biyi_app/models/models.dart';
 import 'package:biyi_app/models/settings_base.dart';
 import 'package:biyi_app/utils/language_util.dart';
 import 'package:biyi_app/widgets/widgets.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class TranslationResultsView extends StatelessWidget {
@@ -32,13 +32,14 @@ class TranslationResultsView extends StatelessWidget {
   final bool doubleClickCopyResult;
 
   Widget _buildNoMatchingTranslationTarget(BuildContext context) {
+    final themeData = Theme.of(context);
     return Card(
-      margin: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 0,
-        bottom: 12,
-      ),
+      // margin: const EdgeInsets.only(
+      //   left: 12,
+      //   right: 12,
+      //   top: 0,
+      //   bottom: 12,
+      // ),
       child: Container(
         constraints: const BoxConstraints(minHeight: 40),
         padding: const EdgeInsets.only(
@@ -54,7 +55,7 @@ class TranslationResultsView extends StatelessWidget {
               const TextSpan(text: '没有与'),
               TextSpan(
                 text: getLanguageName(textDetectedLanguage!),
-                style: TextStyle(color: Theme.of(context).primaryColor),
+                style: TextStyle(color: themeData.colorScheme.primary),
               ),
               const TextSpan(text: '匹配的翻译目标，'),
               const TextSpan(text: '请添加该语种的翻译目标或切换至手动翻译模式。'),

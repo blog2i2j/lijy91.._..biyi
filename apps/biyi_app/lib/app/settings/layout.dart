@@ -6,7 +6,7 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_platform/uni_platform.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -24,6 +24,8 @@ class SettingsLayout extends StatefulWidget {
 
 class _SettingsLayoutState extends State<SettingsLayout> with WindowListener {
   String? _selectedDestination = PageId.settingsGeneral;
+  bool _expanded = true;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -86,14 +88,14 @@ class _SettingsLayoutState extends State<SettingsLayout> with WindowListener {
   }
 
   Widget _buildSidebar(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
 
     return Container(
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceMuted,
+        color: themeData.colorScheme.muted,
         border: Border(
           right: BorderSide(
-            color: theme.colorScheme.border!,
+            color: themeData.colorScheme.border,
           ),
         ),
       ),
@@ -102,86 +104,119 @@ class _SettingsLayoutState extends State<SettingsLayout> with WindowListener {
       ),
       width: 200,
       height: double.infinity,
-      child: SideNavigation(
+      child: NavigationRail(
+        backgroundColor: themeData.colorScheme.card,
+        labelType: NavigationLabelType.expanded,
+        labelPosition: NavigationLabelPosition.end,
+        alignment: NavigationRailAlignment.start,
+        expanded: _expanded,
+        index: _selectedIndex,
+        onSelected: (value) {
+          setState(() {
+            _selectedIndex = value;
+          });
+
+          String newDestination = PageId.settingsGeneral;
+          switch (value) {
+            case 0:
+              newDestination = PageId.settingsGeneral;
+              break;
+            case 1:
+              newDestination = PageId.settingsAppearance;
+              break;
+            case 2:
+              newDestination = PageId.settingsKeybinds;
+              break;
+            case 3:
+              newDestination = PageId.settingsLanguage;
+              break;
+            case 4:
+              newDestination = PageId.settingsAdvanced;
+              break;
+            case 5:
+              newDestination = PageId.settingsOcrEngines;
+              break;
+            case 6:
+              newDestination = PageId.settingsTranslationEngines;
+              break;
+            case 7:
+              newDestination = PageId.settingsAbout;
+              break;
+            default:
+              newDestination = PageId.settingsGeneral;
+              break;
+          }
+          _handleDestinationSelected(newDestination);
+        },
         children: [
-          SideNavigationSection(
-            header: Text(
-              t.app.settings.kLayout.navgroup.client,
-            ),
-            children: [
-              SideNavigationItem(
-                selected: _selectedDestination == PageId.settingsGeneral,
-                leading: const Icon(FluentIcons.app_generic_20_regular),
-                title: Text(t.app.settings.general.title),
-                onTap: () => _handleDestinationSelected(PageId.settingsGeneral),
-              ),
-              SideNavigationItem(
-                selected: _selectedDestination == PageId.settingsAppearance,
-                leading: const Icon(FluentIcons.style_guide_20_regular),
-                title: Text(t.app.settings.appearance.title),
-                onTap: () =>
-                    _handleDestinationSelected(PageId.settingsAppearance),
-              ),
-              SideNavigationItem(
-                selected: _selectedDestination == PageId.settingsKeybinds,
-                leading: const Icon(FluentIcons.keyboard_20_regular),
-                title: Text(t.app.settings.keybinds.title),
-                onTap: () =>
-                    _handleDestinationSelected(PageId.settingsKeybinds),
-              ),
-              SideNavigationItem(
-                selected: _selectedDestination == PageId.settingsLanguage,
-                leading: const Icon(FluentIcons.local_language_20_regular),
-                title: Text(t.app.settings.language.title),
-                onTap: () =>
-                    _handleDestinationSelected(PageId.settingsLanguage),
-              ),
-              SideNavigationItem(
-                selected: _selectedDestination == PageId.settingsAdvanced,
-                leading: const Icon(FluentIcons.settings_20_regular),
-                title: Text(t.app.settings.advanced.title),
-                onTap: () =>
-                    _handleDestinationSelected(PageId.settingsAdvanced),
-              ),
-            ],
+          NavigationLabel(
+            alignment: Alignment.centerLeft,
+            child:
+                Text(t.app.settings.kLayout.navgroup.client).semiBold().muted(),
           ),
-          SideNavigationSection(
-            header: Text(
-              t.app.settings.kLayout.navgroup.integrations,
-            ),
-            children: [
-              SideNavigationItem(
-                selected: _selectedDestination == PageId.settingsOcrEngines,
-                leading: const Icon(FluentIcons.scan_20_regular),
-                title: Text(t.app.settings.ocr_engines.title),
-                onTap: () =>
-                    _handleDestinationSelected(PageId.settingsOcrEngines),
-              ),
-              SideNavigationItem(
-                selected:
-                    _selectedDestination == PageId.settingsTranslationEngines,
-                leading: const Icon(FluentIcons.translate_20_regular),
-                title: Text(
-                  t.app.settings.translation_engines.title,
-                ),
-                onTap: () => _handleDestinationSelected(
-                  PageId.settingsTranslationEngines,
-                ),
-              ),
-            ],
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsGeneral,
+            label: Text(t.app.settings.general.title),
+            child: const Icon(FluentIcons.app_generic_20_regular),
+            // onTap: () => _handleDestinationSelected(PageId.settingsGeneral),
           ),
-          SideNavigationSection(
-            header: Text(
-              t.app.settings.kLayout.navgroup.resources,
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsAppearance,
+            label: Text(t.app.settings.appearance.title),
+            child: const Icon(FluentIcons.style_guide_20_regular),
+            // onTap: () => _handleDestinationSelected(PageId.settingsAppearance),
+          ),
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsKeybinds,
+            label: Text(t.app.settings.keybinds.title),
+            child: const Icon(FluentIcons.keyboard_20_regular),
+            // onTap: () => _handleDestinationSelected(PageId.settingsKeybinds),
+          ),
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsLanguage,
+            label: Text(t.app.settings.language.title),
+            child: const Icon(FluentIcons.local_language_20_regular),
+            // onTap: () => _handleDestinationSelected(PageId.settingsLanguage),
+          ),
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsAdvanced,
+            label: Text(t.app.settings.advanced.title),
+            child: const Icon(FluentIcons.settings_20_regular),
+            // onTap: () => _handleDestinationSelected(PageId.settingsAdvanced),
+          ),
+          NavigationLabel(
+            alignment: Alignment.centerLeft,
+            child: Text(t.app.settings.kLayout.navgroup.integrations)
+                .semiBold()
+                .muted(),
+          ),
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsOcrEngines,
+            label: Text(t.app.settings.ocr_engines.title),
+            child: const Icon(FluentIcons.scan_20_regular),
+            // onTap: () => _handleDestinationSelected(PageId.settingsOcrEngines),
+          ),
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsTranslationEngines,
+            label: Text(
+              t.app.settings.translation_engines.title,
             ),
-            children: [
-              SideNavigationItem(
-                selected: _selectedDestination == PageId.settingsAbout,
-                leading: const Icon(FluentIcons.info_20_regular),
-                title: Text(t.app.settings.about.title),
-                onTap: () => _handleDestinationSelected(PageId.settingsAbout),
-              ),
-            ],
+            child: const Icon(FluentIcons.translate_20_regular),
+            // onTap: () => _handleDestinationSelected(
+            //   PageId.settingsTranslationEngines,
+            // ),
+          ),
+          NavigationLabel(
+            alignment: Alignment.centerLeft,
+            child: Text(t.app.settings.kLayout.navgroup.resources)
+                .semiBold()
+                .muted(),
+          ),
+          NavigationItem(
+            selected: _selectedDestination == PageId.settingsAbout,
+            label: Text(t.app.settings.about.title),
+            child: const Icon(FluentIcons.info_20_regular),
+            // onTap: () => _handleDestinationSelected(PageId.settingsAbout),
           ),
         ],
       ),
@@ -223,7 +258,7 @@ class _SettingsLayoutState extends State<SettingsLayout> with WindowListener {
             Breakpoints.smallAndUp: SlotLayout.from(
               key: const Key('body-medium-and-up'),
               builder: (_) => ColoredBox(
-                color: Theme.of(context).colorScheme.surfaceContainerLow,
+                color: Theme.of(context).colorScheme.background,
                 child: widget.child,
               ),
             ),

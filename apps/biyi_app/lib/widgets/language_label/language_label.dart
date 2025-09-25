@@ -1,6 +1,6 @@
 import 'package:biyi_app/utils/language_util.dart';
 import 'package:biyi_app/widgets/language_flag_view/language_flag_view.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class LanguageLabel extends StatelessWidget {
   const LanguageLabel(

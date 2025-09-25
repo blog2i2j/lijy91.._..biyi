@@ -5,7 +5,7 @@ import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_platform/uni_platform.dart';
 
 class HotKeyDisplayView extends StatelessWidget {

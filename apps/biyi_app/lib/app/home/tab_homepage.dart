@@ -1,7 +1,7 @@
 import 'package:biyi_app/app/router_config.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class TabHomepageScene extends StatefulWidget {
   const TabHomepageScene({super.key});
@@ -15,7 +15,7 @@ class _TabHomepageSceneState extends State<TabHomepageScene> {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        Button(
+        Button.primary(
           onPressed: () {
             context.go(PageId.settingsGeneral);
           },

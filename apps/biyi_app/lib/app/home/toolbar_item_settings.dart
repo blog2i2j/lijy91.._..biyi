@@ -1,7 +1,7 @@
 import 'package:biyi_app/app/router_config.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_platform/uni_platform.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -30,9 +30,7 @@ class _ToolbarItemSettingsState extends State<ToolbarItemSettings> {
   @override
   Widget build(BuildContext context) {
     return Button(
-      kind: ButtonKind.secondary,
-      variant: ButtonVariant.cleared,
-      size: WidgetSize.large,
+      style: ButtonVariance.secondary,
       onPressed: _handleClick,
       child: const Icon(
         FluentIcons.settings_20_regular,

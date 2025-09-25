@@ -4,7 +4,7 @@ import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class TranslationEngineTypesPage extends StatefulWidget {
   const TranslationEngineTypesPage({
@@ -37,8 +37,7 @@ class _TranslationEngineTypesPageState
     return CustomizedAppBar(
       title: Text(t.app.translation_engine_types.title),
       actions: [
-        Button(
-          variant: ButtonVariant.filled,
+        Button.primary(
           onPressed: _handleClickOk,
           child: Text(t.ok),
         ),

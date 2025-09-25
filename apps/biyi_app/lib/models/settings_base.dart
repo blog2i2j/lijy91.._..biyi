@@ -2,10 +2,10 @@ import 'package:biyi_api_client/biyi_api_client.dart';
 import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/models/translation_target.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uikit/uikit.dart' show ThemeMode;
 import 'package:uni_platform/uni_platform.dart';
 
 part 'settings_base.g.dart';

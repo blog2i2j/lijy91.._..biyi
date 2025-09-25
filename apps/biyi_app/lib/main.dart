@@ -10,15 +10,13 @@ import 'package:biyi_app/states/actions/translate_input_content.dart';
 import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/utils/env.dart';
 import 'package:bot_toast/bot_toast.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:launch_at_startup/launch_at_startup.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_platform/uni_platform.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -91,11 +89,14 @@ class _MyAppState extends State<MyApp> {
 
   Widget _buildApp(BuildContext context) {
     final settings = context.watch<Settings>();
-    return MaterialApp.router(
+    return ShadcnApp.router(
+      theme: ThemeData(
+        colorScheme: ColorSchemes.lightBlue,
+        radius: 0.5,
+      ),
       routerConfig: routerConfig,
       themeMode: settings.themeMode,
       builder: (context, child) {
-        Brightness brightness = Theme.of(context).brightness;
         if (UniPlatform.isLinux || UniPlatform.isWindows) {
           child = Stack(
             children: [
@@ -115,22 +116,6 @@ class _MyAppState extends State<MyApp> {
             ],
           );
         }
-        child = DesignTheme(
-          data: brightness == Brightness.light
-              ? DesignThemeData.lightCompact(
-                  iconLibrary: const IconLibrary(
-                    chevronLeft: FluentIcons.chevron_left_16_regular,
-                    chevronRight: FluentIcons.chevron_right_16_regular,
-                  ),
-                )
-              : DesignThemeData.darkCompact(
-                  iconLibrary: const IconLibrary(
-                    chevronLeft: FluentIcons.chevron_left_16_regular,
-                    chevronRight: FluentIcons.chevron_right_16_regular,
-                  ),
-                ),
-          child: child!,
-        );
         child = botToastBuilder(context, child);
         return child;
       },

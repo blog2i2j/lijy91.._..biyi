@@ -1,5 +1,5 @@
 import 'package:biyi_app/models/ext_ocr_engine_config.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class OcrEngineName extends StatelessWidget {
   const OcrEngineName(
@@ -11,14 +11,14 @@ class OcrEngineName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
     return Text.rich(
       TextSpan(
         text: ocrEngineConfig.typeName,
         children: [
           TextSpan(
             text: ' (${ocrEngineConfig.id})',
-            style: theme.typography.bodySmall.copyWith(
+            style: themeData.typography.small.copyWith(
               color: Colors.neutral.shade400,
             ),
           ),

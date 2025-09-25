@@ -1,5 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class CustomizedAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomizedAppBar({
@@ -15,7 +15,7 @@ class CustomizedAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    DesignThemeData theme = DesignTheme.of(context);
+    ThemeData themeData = Theme.of(context);
 
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
 
@@ -28,11 +28,10 @@ class CustomizedAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (leadingWidget == null) {
       if (canPop) {
         padding = const EdgeInsets.symmetric(horizontal: 6);
-        leadingWidget = IconButton(
-          useCloseButton
-              ? FluentIcons.dismiss_20_regular
-              : FluentIcons.chevron_left_24_regular,
-          variant: IconButtonVariant.cleared,
+        leadingWidget = IconButton.ghost(
+          icon: useCloseButton
+              ? const Icon(FluentIcons.dismiss_20_regular)
+              : const Icon(FluentIcons.chevron_left_24_regular),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -56,9 +55,9 @@ class CustomizedAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             const SizedBox(width: 4),
             DefaultTextStyle(
-              style: theme.typography.bodyLarge.copyWith(
+              style: themeData.typography.large.copyWith(
                 fontWeight: FontWeight.w600,
-                color: theme.colorScheme.content,
+                color: themeData.colorScheme.foreground,
               ),
               child: title,
             ),

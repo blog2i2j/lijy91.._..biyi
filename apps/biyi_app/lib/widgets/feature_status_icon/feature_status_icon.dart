@@ -1,5 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class FeatureStatusIcon extends StatelessWidget {
   const FeatureStatusIcon({

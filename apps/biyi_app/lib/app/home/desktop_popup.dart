@@ -23,7 +23,7 @@ import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:reflect_ui/reflect_ui.dart' hide Menu;
+import 'package:uikit/uikit.dart';
 import 'package:screen_capturer/screen_capturer.dart';
 import 'package:screen_retriever/screen_retriever.dart';
 import 'package:screen_text_extractor/screen_text_extractor.dart';
@@ -882,7 +882,6 @@ class _DesktopPopupPageState extends State<DesktopPopupPage>
 
   @override
   Widget build(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => _windowResize());
     final shortcuts = context.watch<Settings>().boundShortcuts;
     return CallbackGlobalShortcuts(
@@ -910,7 +909,6 @@ class _DesktopPopupPageState extends State<DesktopPopupPage>
         },
       },
       child: PageScaffold(
-        backgroundColor: theme.colorScheme.surfaceMuted,
         navigationBar: _buildAppBar(context),
         child: _buildBody(context),
       ),

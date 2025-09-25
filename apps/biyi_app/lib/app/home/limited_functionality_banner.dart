@@ -4,9 +4,9 @@ import 'package:biyi_app/widgets/feature_status_icon/feature_status_icon.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/gestures.dart';
-import 'package:reflect_ui/reflect_ui.dart';
 import 'package:screen_capturer/screen_capturer.dart';
 import 'package:screen_text_extractor/screen_text_extractor.dart';
+import 'package:uikit/uikit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AllowAccessListItem extends StatelessWidget {
@@ -25,7 +25,7 @@ class AllowAccessListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
     return GappedRow(
       gap: 6,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +64,7 @@ class AllowAccessListItem extends StatelessWidget {
                               ..onTap = onTappedGoSettings,
                           ),
                       ],
-                      style: theme.typography.bodyMedium.copyWith(
+                      style: themeData.typography.base.copyWith(
                         color: Colors.neutral.shade700,
                         decoration: TextDecoration.underline,
                         decorationThickness: 1.5,
@@ -102,8 +102,6 @@ class LimitedFunctionalityBanner extends StatelessWidget {
   Widget _build(BuildContext context) {
     if (_isAllowedAllAccess) return Container();
     return Banner(
-      kind: BannerKind.warning,
-      variant: BannerVariant.filled,
       icon: const Icon(FluentIcons.warning_20_regular),
       title: Text.rich(
         TextSpan(
@@ -192,9 +190,7 @@ class LimitedFunctionalityBanner extends StatelessWidget {
         ),
       ),
       actions: [
-        Button(
-          kind: ButtonKind.secondary,
-          variant: ButtonVariant.tinted,
+        Button.secondary(
           onPressed: onTappedRecheckIsAllowedAllAccess,
           child: Text(
             t.app.home.limited_banner_btn_check_again,

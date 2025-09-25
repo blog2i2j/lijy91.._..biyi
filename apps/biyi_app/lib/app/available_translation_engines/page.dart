@@ -5,7 +5,7 @@ import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class AvailableTranslationEnginesPage extends StatefulWidget {
   const AvailableTranslationEnginesPage({
@@ -106,8 +106,7 @@ class _AvailableTranslationEnginesPageState
           t.app.translation_engines.title,
         ),
         actions: [
-          Button(
-            variant: ButtonVariant.filled,
+          Button.primary(
             onPressed: _handleClickOk,
             child: Text(t.ok),
           ),

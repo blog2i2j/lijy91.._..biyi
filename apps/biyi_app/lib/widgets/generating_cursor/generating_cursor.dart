@@ -1,4 +1,4 @@
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class GeneratingCursor extends StatefulWidget {
   const GeneratingCursor({super.key});
@@ -28,7 +28,7 @@ class _GeneratingCursorState extends State<GeneratingCursor>
 
   @override
   Widget build(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: 2),
       child: AnimatedBuilder(
@@ -36,7 +36,7 @@ class _GeneratingCursorState extends State<GeneratingCursor>
         builder: (context, child) {
           return Text(
             '|',
-            style: theme.typography.bodyMedium.copyWith(
+            style: themeData.typography.base.copyWith(
               height: 1.4,
             ),
           );

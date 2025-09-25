@@ -4,7 +4,7 @@ import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class AvailableOcrEnginesPage extends StatefulWidget {
   const AvailableOcrEnginesPage({
@@ -102,8 +102,7 @@ class _AvailableOcrEnginesPageState extends State<AvailableOcrEnginesPage> {
           t.app.ocr_engines.title,
         ),
         actions: [
-          Button(
-            variant: ButtonVariant.muted,
+          Button.secondary(
             onPressed: _handleClickOk,
             child: Text(t.ok),
           ),

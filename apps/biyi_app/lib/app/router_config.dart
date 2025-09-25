@@ -21,7 +21,7 @@ import 'package:biyi_app/app/supported_languages/page.dart';
 import 'package:biyi_app/models/translation_target.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_platform/uni_platform.dart';
 
 class PageId {
@@ -306,6 +306,18 @@ class DialogPage<T> extends Page<T> {
     return DialogRoute<T>(
       context: context,
       settings: this,
+      alignment: Alignment.center,
+      transitionBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+      ) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
       builder: (BuildContext context) {
         return Center(
           child: Container(

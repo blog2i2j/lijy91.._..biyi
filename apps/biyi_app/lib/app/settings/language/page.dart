@@ -3,7 +3,7 @@ import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 
 import 'package:provider/provider.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 extension on AppLocale {
   String get displayName {

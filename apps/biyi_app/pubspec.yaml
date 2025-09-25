@@ -27,18 +27,17 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hotkey_manager: ^0.2.2
-  intl: ^0.19.0
+  intl: ^0.20.2
   json_annotation: ^4.8.0
   keypress_simulator: ^0.2.0
   launch_at_startup: ^0.3.1
   ocr_engine_builtin: ^0.1.1
   ocr_engine_youdao: ^0.1.1
-  package_info_plus: ^5.0.1
+  package_info_plus: ^9.0.0
   path: ^1.8.3
   path_provider: ^2.1.1
   protocol_handler: ^0.1.6
   provider: ^6.1.1
-  reflect_ui: 0.0.0
   reorderables: ^0.6.0
   screen_capturer: ^0.2.2
   screen_retriever: ^0.2.0
@@ -56,6 +55,7 @@ dependencies:
   translation_engine_tencent: ^0.1.6
   translation_engine_youdao: ^0.1.6
   tray_manager: ^0.2.1
+  uikit: 0.0.0
   uni_ocr_client: ^0.1.1
   uni_platform: ^0.1.0
   uni_translate_client: ^0.1.7
@@ -73,11 +73,6 @@ dev_dependencies:
   slang_build_runner: ^4.1.0
 
 dependency_overrides:
-  reflect_ui:
-    # git:
-    #   path: packages/reflect_ui
-    #   url: https://github.com/leanflutter/reflect_ui.git
-    path: ../../../../leanflutter/reflect_ui/packages/reflect_ui
   screen_retriever: 0.2.0
 
 flutter:

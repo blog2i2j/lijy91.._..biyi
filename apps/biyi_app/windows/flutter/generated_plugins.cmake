@@ -5,11 +5,11 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
   clipboard_watcher
-  hotkey_manager
-  keypress_simulator
+  hotkey_manager_windows
+  keypress_simulator_windows
   protocol_handler
-  screen_capturer
-  screen_retriever
+  screen_capturer_windows
+  screen_retriever_windows
   screen_text_extractor
   tray_manager
   url_launcher_windows

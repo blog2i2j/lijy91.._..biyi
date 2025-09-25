@@ -1,5 +1,5 @@
 import 'package:biyi_app/app/settings/page.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class TabSettingsScene extends StatelessWidget {
   const TabSettingsScene({super.key});

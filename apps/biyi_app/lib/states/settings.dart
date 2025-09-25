@@ -12,10 +12,10 @@ import 'package:biyi_app/states/modifiers/translation_engines_modifier.dart';
 import 'package:biyi_app/states/modifiers/translation_targets_modifier.dart';
 import 'package:biyi_app/utils/utils.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/widgets.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:ocr_engine_builtin/ocr_engine_builtin.dart';
+import 'package:uikit/uikit.dart' show ThemeMode;
 
 export 'package:biyi_app/models/settings_base.dart';
 

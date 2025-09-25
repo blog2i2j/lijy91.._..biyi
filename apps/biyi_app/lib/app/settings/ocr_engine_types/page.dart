@@ -4,7 +4,7 @@ import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:biyi_app/widgets/ocr_engine_icon/ocr_engine_icon.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class OcrEngineTypesPage extends StatefulWidget {
   const OcrEngineTypesPage({
@@ -35,8 +35,7 @@ class _OcrEngineTypesPageState extends State<OcrEngineTypesPage> {
     return CustomizedAppBar(
       title: Text(t.app.ocr_engine_types.title),
       actions: [
-        Button(
-          variant: ButtonVariant.filled,
+        Button.primary(
           onPressed: _handleClickOk,
           child: Text(t.ok),
         ),

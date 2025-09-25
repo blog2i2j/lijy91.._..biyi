@@ -12,7 +12,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
 class TranslationResultRecordView extends StatelessWidget {
@@ -51,7 +51,7 @@ class TranslationResultRecordView extends StatelessWidget {
   }
 
   Widget _buildRequestLoading(BuildContext context) {
-    IconThemeData iconThemeData = Theme.of(context).iconTheme;
+    ThemeData themeData = Theme.of(context);
     return Container(
       constraints: const BoxConstraints(
         minHeight: 40,
@@ -65,7 +65,7 @@ class TranslationResultRecordView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SpinKitThreeBounce(
-            color: iconThemeData.color,
+            color: themeData.colorScheme.foreground,
             size: 12.0,
           ),
         ],
@@ -100,7 +100,7 @@ class TranslationResultRecordView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
 
     // String? word;
     List<TextTranslation>? translations; // 翻译
@@ -168,7 +168,7 @@ class TranslationResultRecordView extends StatelessWidget {
                   ),
               ],
             ),
-            style: theme.typography.bodyMedium.copyWith(
+            style: themeData.typography.base.copyWith(
               height: 1.4,
             ),
             selectionHeightStyle: ui.BoxHeightStyle.max,
@@ -221,7 +221,7 @@ class TranslationResultRecordView extends StatelessWidget {
                           if ((definitions[i].name ?? '').isNotEmpty)
                             TextSpan(
                               text: '${definitions[i].name}',
-                              style: Theme.of(context).textTheme.bodySmall,
+                              style: themeData.typography.small,
                             ),
                           if ((definitions[i].name ?? '').isNotEmpty)
                             const TextSpan(text: ' '),
@@ -234,7 +234,7 @@ class TranslationResultRecordView extends StatelessWidget {
                       ),
                   ],
                 ),
-                style: theme.typography.bodyMedium.copyWith(
+                style: themeData.typography.base.copyWith(
                   height: 1.5,
                 ),
                 selectionHeightStyle: ui.BoxHeightStyle.max,
@@ -256,21 +256,21 @@ class TranslationResultRecordView extends StatelessWidget {
                           for (var tenseValue in (tenses[i].values ?? []))
                             TextSpan(
                               text: ' $tenseValue ',
-                              style: theme.typography.bodyMedium.copyWith(
-                                color: theme.colorScheme.primary,
+                              style: themeData.typography.base.copyWith(
+                                color: themeData.colorScheme.primary,
                                 fontWeight: FontWeight.w500,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => onTextTapped(tenseValue),
                             ),
                         ],
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              fontSize: 13,
-                            ),
+                        style: themeData.typography.small.copyWith(
+                          fontSize: 13,
+                        ),
                       ),
                   ],
                 ),
-                style: theme.typography.bodyMedium.copyWith(
+                style: themeData.typography.base.copyWith(
                   height: 1.5,
                 ),
                 selectionHeightStyle: ui.BoxHeightStyle.max,
@@ -382,12 +382,12 @@ class TranslationResultRecordView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 0,
-        bottom: 12,
-      ),
+      // margin: const EdgeInsets.only(
+      //   left: 12,
+      //   right: 12,
+      //   top: 0,
+      //   bottom: 12,
+      // ),
       child: SizedBox(
         width: double.infinity,
         child: Stack(

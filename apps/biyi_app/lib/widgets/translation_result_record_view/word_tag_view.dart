@@ -1,4 +1,4 @@
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
 class WordTagView extends StatelessWidget {
@@ -11,9 +11,7 @@ class WordTagView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Badge(
-      variant: BadgeVariant.outlined,
-      color: Colors.neutral,
+    return PrimaryBadge(
       child: Text(wordTag.name),
     );
   }

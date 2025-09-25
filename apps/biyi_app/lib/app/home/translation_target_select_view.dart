@@ -4,7 +4,7 @@ import 'package:biyi_app/models/settings_base.dart';
 import 'package:biyi_app/utils/language_util.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class AvailableLanguageSelector extends StatelessWidget {
   const AvailableLanguageSelector({
@@ -38,9 +38,9 @@ class AvailableLanguageSelector extends StatelessWidget {
                     flagSize: 18,
                   );
                   return Button(
-                    variant: isSelected
-                        ? ButtonVariant.filled
-                        : ButtonVariant.outlined,
+                    style: isSelected
+                        ? ButtonVariance.secondary
+                        : ButtonVariance.ghost,
                     onPressed: () => onChanged(supportedLanguage),
                     child: child,
                   );
@@ -94,18 +94,17 @@ class _TranslationTargetSelectViewState
 
   @override
   Widget build(BuildContext context) {
-    IconThemeData iconThemeData = Theme.of(context).iconTheme;
-    final DesignThemeData theme = DesignTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
     if (widget.translationMode == TranslationMode.auto) {
       return Container();
     }
     return Card(
-      margin: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 0,
-        bottom: 12,
-      ),
+      // margin: const EdgeInsets.only(
+      //   left: 12,
+      //   right: 12,
+      //   top: 0,
+      //   bottom: 12,
+      // ),
       child: Column(
         children: [
           Container(
@@ -113,10 +112,7 @@ class _TranslationTargetSelectViewState
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(
               children: [
-                Button(
-                  kind: ButtonKind.secondary,
-                  variant: ButtonVariant.cleared,
-                  size: WidgetSize.large,
+                Button.secondary(
                   child: GappedRow(
                     gap: 4,
                     children: [
@@ -124,11 +120,11 @@ class _TranslationTargetSelectViewState
                         widget.sourceLanguage,
                         flagSize: 18,
                         flagBorderColor: widget.isShowSourceLanguageSelector
-                            ? Theme.of(context).primaryColor
+                            ? themeData.colorScheme.primary
                             : null,
-                        style: theme.typography.bodyMedium.copyWith(
+                        style: themeData.typography.base.copyWith(
                           color: widget.isShowSourceLanguageSelector
-                              ? theme.colorScheme.primary
+                              ? themeData.colorScheme.primary
                               : null,
                         ),
                       ),
@@ -145,8 +141,8 @@ class _TranslationTargetSelectViewState
                             FluentIcons.chevron_down_20_regular,
                             size: 14,
                             color: widget.isShowSourceLanguageSelector
-                                ? iconThemeData.color
-                                : theme.typography.bodyMedium.color,
+                                ? themeData.colorScheme.primary
+                                : themeData.typography.base.color,
                           ),
                         ),
                       ),
@@ -158,11 +154,7 @@ class _TranslationTargetSelectViewState
                     );
                   },
                 ),
-                Button(
-                  kind: ButtonKind.secondary,
-                  variant: ButtonVariant.cleared,
-                  padding: EdgeInsets.zero,
-                  iconSize: 22,
+                Button.secondary(
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.fastOutSlowIn,
@@ -184,10 +176,7 @@ class _TranslationTargetSelectViewState
                     );
                   },
                 ),
-                Button(
-                  kind: ButtonKind.secondary,
-                  variant: ButtonVariant.cleared,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
+                Button.secondary(
                   child: GappedRow(
                     gap: 4,
                     children: [
@@ -195,11 +184,11 @@ class _TranslationTargetSelectViewState
                         widget.targetLanguage,
                         flagSize: 18,
                         flagBorderColor: widget.isShowTargetLanguageSelector
-                            ? Theme.of(context).primaryColor
+                            ? themeData.colorScheme.primary
                             : null,
-                        style: theme.typography.bodyMedium.copyWith(
+                        style: themeData.typography.base.copyWith(
                           color: widget.isShowTargetLanguageSelector
-                              ? theme.colorScheme.primary
+                              ? themeData.colorScheme.primary
                               : null,
                         ),
                       ),
@@ -216,8 +205,8 @@ class _TranslationTargetSelectViewState
                             FluentIcons.chevron_down_20_regular,
                             size: 14,
                             color: widget.isShowTargetLanguageSelector
-                                ? theme.colorScheme.primary
-                                : theme.typography.bodyMedium.color,
+                                ? themeData.colorScheme.primary
+                                : themeData.typography.base.color,
                           ),
                         ),
                       ),

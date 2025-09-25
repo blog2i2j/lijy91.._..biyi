@@ -1,5 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 import 'package:window_manager/window_manager.dart';
 
 class ToolbarItemAlwaysOnTop extends StatefulWidget {
@@ -33,9 +33,8 @@ class _ToolbarItemAlwaysOnTopState extends State<ToolbarItemAlwaysOnTop> {
         _isAlwaysOnTop ? 0 : -0.8,
       ),
       child: Button(
-        variant: ButtonVariant.cleared,
-        kind: _isAlwaysOnTop ? ButtonKind.primary : ButtonKind.secondary,
-        size: WidgetSize.large,
+        style:
+            _isAlwaysOnTop ? ButtonVariance.primary : ButtonVariance.secondary,
         onPressed: () {
           setState(() {
             _isAlwaysOnTop = !_isAlwaysOnTop;

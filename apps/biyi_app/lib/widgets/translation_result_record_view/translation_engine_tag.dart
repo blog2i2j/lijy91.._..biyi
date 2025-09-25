@@ -2,7 +2,7 @@ import 'package:biyi_app/models/ext_translation_engine_config.dart';
 import 'package:biyi_app/models/translation_result_record.dart';
 import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/widgets/translation_engine_icon/translation_engine_icon.dart';
-import 'package:reflect_ui/reflect_ui.dart';
+import 'package:uikit/uikit.dart';
 
 class TranslationEngineTag extends StatefulWidget {
   const TranslationEngineTag({
@@ -28,6 +28,7 @@ class _TranslationEngineTagState extends State<TranslationEngineTag> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     if (_translationEngineConfig == null) {
       return const SizedBox();
     }
@@ -45,7 +46,7 @@ class _TranslationEngineTagState extends State<TranslationEngineTag> {
         alignment: Alignment.centerRight,
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.outlineVariant,
+            color: themeData.colorScheme.border,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20),
               bottomLeft: Radius.circular(20),
@@ -57,10 +58,7 @@ class _TranslationEngineTagState extends State<TranslationEngineTag> {
             left: 4,
             right: 2,
           ),
-          child: Button(
-            variant: ButtonVariant.cleared,
-            // padding: EdgeInsets.zero,
-            // minSize: 0,
+          child: Button.ghost(
             onPressed: () {},
             child: AnimatedCrossFade(
               crossFadeState: !_isHovered
@@ -88,9 +86,9 @@ class _TranslationEngineTagState extends State<TranslationEngineTag> {
                     padding: const EdgeInsets.only(left: 4, right: 2),
                     child: Text(
                       _translationEngineConfig!.typeName,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            fontSize: 10,
-                          ),
+                      style: themeData.typography.small.copyWith(
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 ],
