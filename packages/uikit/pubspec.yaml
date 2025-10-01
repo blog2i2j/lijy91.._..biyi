@@ -4,7 +4,7 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ">=3.8.0 <4.0.0"
+  sdk: ">=3.9.2 <4.0.0"
 
 dependencies:
   fluentui_system_icons: ^1.1.255
@@ -23,4 +23,4 @@ dev_dependencies:
   mostly_reasonable_lints: ^0.1.2
 
 flutter:
-  uses-material-design: true
+  uses-material-design: false

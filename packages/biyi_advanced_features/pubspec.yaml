@@ -4,8 +4,8 @@ version: 0.1.0
 publish_to: none
 
 environment:
-  sdk: ">=2.18.0 <4.0.0"
-  flutter: ">=3.3.0"
+  sdk: ">=3.9.2 <4.0.0"
+  flutter: ">=3.35.4"
 
 dependencies:
   biyi_api_client:
