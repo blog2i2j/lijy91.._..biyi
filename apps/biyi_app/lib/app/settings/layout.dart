@@ -155,30 +155,35 @@ class _SettingsLayoutState extends State<SettingsLayout> with WindowListener {
                 Text(t.app.settings.kLayout.navgroup.client).semiBold().muted(),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsGeneral,
             label: Text(t.app.settings.general.title),
             child: const Icon(FluentIcons.app_generic_20_regular),
             // onTap: () => _handleDestinationSelected(PageId.settingsGeneral),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsAppearance,
             label: Text(t.app.settings.appearance.title),
             child: const Icon(FluentIcons.style_guide_20_regular),
             // onTap: () => _handleDestinationSelected(PageId.settingsAppearance),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsKeybinds,
             label: Text(t.app.settings.keybinds.title),
             child: const Icon(FluentIcons.keyboard_20_regular),
             // onTap: () => _handleDestinationSelected(PageId.settingsKeybinds),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsLanguage,
             label: Text(t.app.settings.language.title),
             child: const Icon(FluentIcons.local_language_20_regular),
             // onTap: () => _handleDestinationSelected(PageId.settingsLanguage),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsAdvanced,
             label: Text(t.app.settings.advanced.title),
             child: const Icon(FluentIcons.settings_20_regular),
@@ -191,12 +196,14 @@ class _SettingsLayoutState extends State<SettingsLayout> with WindowListener {
                 .muted(),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsOcrEngines,
             label: Text(t.app.settings.ocr_engines.title),
             child: const Icon(FluentIcons.scan_20_regular),
             // onTap: () => _handleDestinationSelected(PageId.settingsOcrEngines),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsTranslationEngines,
             label: Text(
               t.app.settings.translation_engines.title,
@@ -213,6 +220,7 @@ class _SettingsLayoutState extends State<SettingsLayout> with WindowListener {
                 .muted(),
           ),
           NavigationItem(
+            alignment: Alignment.centerLeft,
             selected: _selectedDestination == PageId.settingsAbout,
             label: Text(t.app.settings.about.title),
             child: const Icon(FluentIcons.info_20_regular),

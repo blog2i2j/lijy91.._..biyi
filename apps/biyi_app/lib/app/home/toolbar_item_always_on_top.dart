@@ -25,26 +25,26 @@ class _ToolbarItemAlwaysOnTopState extends State<ToolbarItemAlwaysOnTop> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.fastOutSlowIn,
-      transformAlignment: Alignment.center,
-      transform: Matrix4.rotationZ(
-        _isAlwaysOnTop ? 0 : -0.8,
-      ),
-      child: Button(
-        style:
-            _isAlwaysOnTop ? ButtonVariance.primary : ButtonVariance.secondary,
-        onPressed: () {
-          setState(() {
-            _isAlwaysOnTop = !_isAlwaysOnTop;
-          });
-          windowManager.setAlwaysOnTop(_isAlwaysOnTop);
-        },
+    final ThemeData themeData = Theme.of(context);
+    return IconButton.text(
+      onPressed: () {
+        setState(() {
+          _isAlwaysOnTop = !_isAlwaysOnTop;
+        });
+        windowManager.setAlwaysOnTop(_isAlwaysOnTop);
+      },
+      icon: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.fastOutSlowIn,
+        transformAlignment: Alignment.center,
+        transform: Matrix4.rotationZ(
+          _isAlwaysOnTop ? 0 : -0.8,
+        ),
         child: Icon(
           _isAlwaysOnTop
               ? FluentIcons.pin_20_filled
               : FluentIcons.pin_20_regular,
+          color: _isAlwaysOnTop ? themeData.colorScheme.primary : null,
         ),
       ),
     );

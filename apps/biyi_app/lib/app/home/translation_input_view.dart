@@ -5,8 +5,7 @@ import 'package:biyi_app/models/settings_base.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:screen_capturer/screen_capturer.dart';
-import 'package:uikit/uikit.dart' hide Tooltip;
-import 'package:flutter/material.dart' show Tooltip;
+import 'package:uikit/uikit.dart';
 
 class TranslationInputView extends StatelessWidget {
   const TranslationInputView({
@@ -142,7 +141,7 @@ class TranslationInputView extends StatelessWidget {
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 56),
-          child: Button.secondary(
+          child: Button.primary(
             onPressed: onButtonTappedTrans,
             child: Text(t.app.home.btn_trans),
           ),

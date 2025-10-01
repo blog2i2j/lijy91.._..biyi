@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 class PreferenceListItem extends StatelessWidget {
@@ -110,7 +110,7 @@ class RadioListTile<T> extends StatelessWidget {
       },
       additionalInfo: useCheckmarkStyle
           ? isChecked
-                ? const Icon(Icons.check_circle)
+                ? const Icon(FluentIcons.checkmark_circle_20_filled)
                 : null
           : Radio(value: isChecked),
     );
@@ -167,7 +167,7 @@ class ListTileChevron extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return Icon(
-      CupertinoIcons.chevron_right,
+      FluentIcons.chevron_right_20_regular,
       size: 18.0,
       color: themeData.colorScheme.border,
     );

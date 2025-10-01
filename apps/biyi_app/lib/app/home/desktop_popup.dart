@@ -865,7 +865,7 @@ class _DesktopPopupPageState extends State<DesktopPopupPage>
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(34),
+      preferredSize: const Size.fromHeight(40),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Row(

@@ -7,6 +7,7 @@ environment:
   sdk: ">=3.8.0 <4.0.0"
 
 dependencies:
+  fluentui_system_icons: ^1.1.255
   flutter:
     sdk: flutter
   gap: ^3.0.1

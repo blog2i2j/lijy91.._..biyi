@@ -47,7 +47,9 @@ class _BannerState extends State<Banner> {
       foregroundDecoration: BoxDecoration(
         border: Border.all(),
       ),
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(
+        color: Colors.orange,
+      ),
       child: GappedRow(
         gap: 8,
         crossAxisAlignment: CrossAxisAlignment.start,

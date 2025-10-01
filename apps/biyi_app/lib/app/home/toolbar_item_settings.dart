@@ -29,10 +29,9 @@ class _ToolbarItemSettingsState extends State<ToolbarItemSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
-      style: ButtonVariance.secondary,
+    return IconButton.text(
       onPressed: _handleClick,
-      child: const Icon(
+      icon: const Icon(
         FluentIcons.settings_20_regular,
       ),
     );
