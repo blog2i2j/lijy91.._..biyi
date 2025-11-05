@@ -52,18 +52,16 @@ class TranslationInputView extends StatelessWidget {
           message: t.app.home.tip_translation_mode(
             mode: translationMode.displayName,
           ),
-          child: Button(
-            style: translationMode == TranslationMode.auto
+          child: IconButton(
+            variance: translationMode == TranslationMode.auto
                 ? ButtonVariance.primary
                 : ButtonVariance.secondary,
-            child: Builder(
+            icon: Builder(
               builder: (context) {
                 return Stack(
                   alignment: Alignment.center,
                   children: [
-                    const Icon(
-                      FluentIcons.target_20_regular,
-                    ),
+                    const Icon(FluentIcons.target_20_regular),
                     if (translationMode == TranslationMode.auto)
                       Positioned(
                         bottom: 0,
@@ -95,8 +93,8 @@ class TranslationInputView extends StatelessWidget {
             onPressed: () {
               TranslationMode newTranslationMode =
                   translationMode == TranslationMode.auto
-                      ? TranslationMode.manual
-                      : TranslationMode.auto;
+                  ? TranslationMode.manual
+                  : TranslationMode.auto;
               onTranslationModeChanged(newTranslationMode);
             },
           ),
@@ -108,20 +106,16 @@ class TranslationInputView extends StatelessWidget {
         ),
         Tooltip(
           message: t.app.home.tip_extract_text_from_screen_capture,
-          child: Button.secondary(
+          child: IconButton.secondary(
             onPressed: onClickExtractTextFromScreenCapture,
-            child: const Icon(
-              FluentIcons.crop_20_regular,
-            ),
+            icon: const Icon(FluentIcons.crop_20_regular),
           ),
         ),
         Tooltip(
           message: t.app.home.tip_extract_text_from_clipboard,
-          child: Button.secondary(
+          child: IconButton.secondary(
             onPressed: onClickExtractTextFromClipboard,
-            child: const Icon(
-              FluentIcons.clipboard_text_ltr_20_regular,
-            ),
+            icon: const Icon(FluentIcons.clipboard_text_ltr_20_regular),
           ),
         ),
       ],
@@ -168,9 +162,7 @@ class TranslationInputView extends StatelessWidget {
               children: [
                 TextField(
                   focusNode: focusNode,
-                  decoration: const BoxDecoration(
-                    color: Color(0x00000000),
-                  ),
+                  decoration: const BoxDecoration(color: Color(0x00000000)),
                   selectionHeightStyle: BoxHeightStyle.max,
                   controller: controller,
                   padding: const EdgeInsets.only(
@@ -179,9 +171,7 @@ class TranslationInputView extends StatelessWidget {
                     top: 14,
                     bottom: 12,
                   ),
-                  style: themeData.typography.base.copyWith(
-                    height: 1.2,
-                  ),
+                  style: themeData.typography.base.copyWith(height: 1.2),
                   placeholder: Text(
                     t.app.home.input_hint,
                     style: themeData.typography.base.copyWith(
