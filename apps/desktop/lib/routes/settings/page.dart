@@ -1,8 +1,9 @@
 import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/utils/utils.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
+import 'package:deftui/deftui.dart';
 
-import 'package:uikit/uikit.dart';
+import '../../../widgets/page_scaffold.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -27,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   version: sharedEnv.appVersion,
                   buildNumber: '${sharedEnv.appBuildNumber}',
                 ),
-                style: Theme.of(context).typography.base,
+                style: Theme.of(context).vars.bodyMedium,
               ),
             ),
           ],

@@ -5,20 +5,20 @@ import 'dart:io';
 import 'package:biyi_app/extension/hotkey.dart';
 import 'package:biyi_app/extension/window_controller.dart';
 import 'package:biyi_app/i18n/strings.g.dart';
+import 'package:biyi_app/main.dart';
 import 'package:biyi_app/models/models.dart';
 import 'package:biyi_app/services/api_client.dart';
 import 'package:biyi_app/services/services.dart';
 import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/utils/utils.dart';
-import 'package:biyi_app/main.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:collection/collection.dart';
+import 'package:deftui/deftui.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:uikit/uikit.dart';
 import 'package:screen_capturer/screen_capturer.dart';
 import 'package:screen_text_extractor/screen_text_extractor.dart';
 import 'package:shortid/shortid.dart';
@@ -26,6 +26,8 @@ import 'package:tray_manager/tray_manager.dart';
 import 'package:uni_ocr_client/uni_ocr_client.dart';
 import 'package:uni_platform/uni_platform.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
+
+import '../../widgets/page_scaffold.dart';
 import './limited_functionality_banner.dart';
 import './new_version_found_banner.dart';
 import './toolbar_item_always_on_top.dart';
@@ -89,16 +91,44 @@ class _MiniTranslatorState extends State<MiniTranslator>
   }
 
   @override
-  void initState() {
-    Settings.instance.addListener(_handleChanged);
-    WidgetsBinding.instance.addObserver(this);
-    if (UniPlatform.isLinux || UniPlatform.isMacOS || UniPlatform.isWindows) {
-      protocolHandler.addListener(this);
-      trayManager.addListener(this);
-      _init();
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _windowResize());
+    final shortcuts = context.watch<Settings>().boundShortcuts;
+    return CallbackGlobalShortcuts(
+      bindings: {
+        shortcuts.showOrHide.singleActivator: () async {
+          // TODO: Implement window show or hide
+        },
+        shortcuts.hide.singleActivator: () => _windowHide(),
+        shortcuts.extractFromScreenSelection.singleActivator: () =>
+            _handleExtractTextFromScreenSelection(),
+        shortcuts.extractFromScreenCapture.singleActivator: () =>
+            _handleExtractTextFromScreenCapture(),
+        shortcuts.extractFromClipboard.singleActivator: () =>
+            _handleExtractTextFromClipboard(),
+        shortcuts.inputSubmitWithMetaEnter.singleActivator: () {
+          if (Settings.instance.inputSubmitMode != InputSubmitMode.metaEnter) {
+            return;
+          }
+          _handleButtonTappedTrans();
+        },
+      },
+      child: PageScaffold(
+        navigationBar: _buildToolBar(context),
+        child: _buildBody(context),
+      ),
+    );
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    final newBrightness = View.of(
+      context,
+    ).platformDispatcher.platformBrightness;
+    if (newBrightness != _brightness) {
+      _brightness = newBrightness;
+      setState(() {});
     }
-    _loadData();
-    super.initState();
   }
 
   @override
@@ -113,18 +143,326 @@ class _MiniTranslatorState extends State<MiniTranslator>
   }
 
   @override
-  void didChangePlatformBrightness() {
-    final newBrightness = View.of(
-      context,
-    ).platformDispatcher.platformBrightness;
-    if (newBrightness != _brightness) {
-      _brightness = newBrightness;
-      setState(() {});
+  void initState() {
+    Settings.instance.addListener(_handleChanged);
+    WidgetsBinding.instance.addObserver(this);
+    if (UniPlatform.isLinux || UniPlatform.isMacOS || UniPlatform.isWindows) {
+      protocolHandler.addListener(this);
+      trayManager.addListener(this);
+      _init();
     }
+    _loadData();
+    super.initState();
+  }
+
+  @override
+  Future<void> onProtocolUrlReceived(String url) async {
+    Uri uri = Uri.parse(url);
+    if (uri.scheme != 'beyondtranslate') return;
+
+    if (uri.authority == 'translate') {
+      if (_text.isNotEmpty) _handleButtonTappedClear();
+      String? text = uri.queryParameters['text'];
+      if (text != null && text.isNotEmpty) {
+        _handleTextChanged(text, isRequery: true);
+      }
+    }
+    await _windowShow();
+  }
+
+  Widget _buildBannersView(BuildContext context) {
+    bool isFoundNewVersion =
+        _latestVersion != null &&
+        _latestVersion!.buildNumber > sharedEnv.appBuildNumber;
+
+    bool isNoAllowedAllAccess =
+        !(_isAllowedScreenCaptureAccess && _isAllowedScreenSelectionAccess);
+
+    return Container(
+      key: _bannersViewKey,
+      width: double.infinity,
+      margin: EdgeInsets.only(
+        bottom: (isFoundNewVersion || isNoAllowedAllAccess) ? 12 : 0,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isFoundNewVersion)
+            NewVersionFoundBanner(latestVersion: _latestVersion!),
+          if (isNoAllowedAllAccess)
+            LimitedFunctionalityBanner(
+              isAllowedScreenCaptureAccess: _isAllowedScreenCaptureAccess,
+              isAllowedScreenSelectionAccess: _isAllowedScreenSelectionAccess,
+              onTappedRecheckIsAllowedAllAccess: () async {
+                _isAllowedScreenCaptureAccess = await ScreenCapturer.instance
+                    .isAccessAllowed();
+                _isAllowedScreenSelectionAccess = await screenTextExtractor
+                    .isAccessAllowed();
+
+                setState(() {});
+
+                if (_isAllowedScreenCaptureAccess &&
+                    _isAllowedScreenSelectionAccess) {
+                  BotToast.showText(
+                    text: t.app.home.limited_banner_msg_all_access_allowed,
+                    align: Alignment.center,
+                  );
+                } else {
+                  BotToast.showText(
+                    text: t.app.home.limited_banner_msg_all_access_not_allowed,
+                    align: Alignment.center,
+                  );
+                }
+              },
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          _buildBannersView(context),
+          _buildInputView(context),
+          _buildResultsView(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInputView(BuildContext context) {
+    return SizedBox(
+      key: _inputViewKey,
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TranslationInputView(
+            focusNode: _focusNode,
+            controller: _textEditingController,
+            onChanged: (newValue) => _handleTextChanged(newValue),
+            capturedData: _capturedData,
+            isTextDetecting: _isTextDetecting,
+            translationMode: Settings.instance.translationMode,
+            onTranslationModeChanged: (newTranslationMode) {
+              context.read<Settings>().update(
+                translationMode: newTranslationMode,
+              );
+            },
+            inputSubmitMode: Settings.instance.inputSubmitMode,
+            onClickExtractTextFromScreenCapture:
+                _handleExtractTextFromScreenCapture,
+            onClickExtractTextFromClipboard: _handleExtractTextFromClipboard,
+            onButtonTappedClear: _handleButtonTappedClear,
+            onButtonTappedTrans: _handleButtonTappedTrans,
+          ),
+          TranslationTargetSelectView(
+            translationMode: Settings.instance.translationMode,
+            isShowSourceLanguageSelector: _isShowSourceLanguageSelector,
+            isShowTargetLanguageSelector: _isShowTargetLanguageSelector,
+            onToggleShowSourceLanguageSelector: (newValue) {
+              setState(() {
+                _isShowSourceLanguageSelector = newValue;
+                _isShowTargetLanguageSelector = false;
+              });
+            },
+            onToggleShowTargetLanguageSelector: (newValue) {
+              setState(() {
+                _isShowSourceLanguageSelector = false;
+                _isShowTargetLanguageSelector = newValue;
+              });
+            },
+            sourceLanguage: _sourceLanguage,
+            targetLanguage: _targetLanguage,
+            onChanged: (newSourceLanguage, newTargetLanguage) {
+              setState(() {
+                _isShowSourceLanguageSelector = false;
+                _isShowTargetLanguageSelector = false;
+                _sourceLanguage = newSourceLanguage;
+                _targetLanguage = newTargetLanguage;
+              });
+              if (_text.isNotEmpty) {
+                _handleButtonTappedTrans();
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResultsView(BuildContext context) {
+    final settings = context.watch<Settings>();
+    return TranslationResultsView(
+      viewKey: _resultsViewKey,
+      controller: _scrollController,
+      translationMode: settings.translationMode,
+      querySubmitted: _querySubmitted,
+      text: _text,
+      textDetectedLanguage: _textDetectedLanguage,
+      translationResultList: _translationResultList,
+      onTextTapped: (word) {
+        _handleTextChanged(word, isRequery: true);
+      },
+      doubleClickCopyResult: settings.doubleClickCopyResult,
+    );
+  }
+
+  PreferredSizeWidget _buildToolBar(BuildContext context) {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(40),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const ToolbarItemAlwaysOnTop(),
+            Expanded(child: Container()),
+            IconButton(
+              onPressed: () {
+                mainWindowController.window.show();
+              },
+              icon: FluentIcons.settings_20_regular,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _handleButtonTappedClear() {
+    setState(() {
+      _querySubmitted = false;
+      _text = '';
+      _textDetectedLanguage = null;
+      _capturedData = null;
+      _isTextDetecting = false;
+      _translationResultList = [];
+    });
+    _textEditingController.clear();
+    _focusNode.requestFocus();
+  }
+
+  Future<void> _handleButtonTappedTrans() async {
+    if (_text.isEmpty) {
+      BotToast.showText(
+        text: t.app.home.msg_please_enter_word_or_text,
+        align: Alignment.center,
+      );
+      _focusNode.requestFocus();
+      return;
+    }
+    await _queryData();
   }
 
   void _handleChanged() {
     if (mounted) setState(() {});
+  }
+
+  Future<void> _handleExtractTextFromClipboard() async {
+    // TODO: Implement window show when not visible
+    ExtractedData? extractedData = await screenTextExtractor.extract(
+      mode: ExtractMode.clipboard,
+    );
+    _handleTextChanged(extractedData?.text, isRequery: true);
+  }
+
+  Future<void> _handleExtractTextFromScreenCapture() async {
+    setState(() {
+      _querySubmitted = false;
+      _text = '';
+      _textDetectedLanguage = null;
+      _capturedData = null;
+      _isTextDetecting = false;
+      _translationResultList = [];
+    });
+    _textEditingController.clear();
+    _focusNode.unfocus();
+
+    await _windowHide();
+
+    String? imagePath;
+    if (!UniPlatform.isWeb) {
+      Directory appDataDirectory = await getAppDirectory();
+      int timestamp = DateTime.now().millisecondsSinceEpoch;
+      String fileName = 'Screenshot-$timestamp.png';
+      imagePath = '${appDataDirectory.path}/Screenshots/$fileName';
+    }
+    _capturedData = await screenCapturer.capture(imagePath: imagePath);
+
+    await _windowShow();
+
+    if (_capturedData == null) {
+      BotToast.showText(
+        text: t.app.home.msg_capture_screen_area_canceled,
+        align: Alignment.center,
+      );
+      setState(() {});
+      return;
+    } else {
+      try {
+        _isTextDetecting = true;
+        setState(() {});
+        String base64Image = base64Encode(_capturedData!.imageBytes!);
+        await Future.delayed(const Duration(milliseconds: 10));
+        RecognizeTextResponse recognizeTextResponse = await sharedOcrClient
+            .use(Settings.instance.defaultOcrEngineId ?? '')
+            .recognizeText(
+              RecognizeTextRequest(
+                imagePath: _capturedData?.imagePath,
+                base64Image: base64Image,
+              ),
+            );
+        _isTextDetecting = false;
+        setState(() {});
+        if (Settings.instance.autoCopyRecognizedText) {
+          Clipboard.setData(ClipboardData(text: recognizeTextResponse.text));
+        }
+        _handleTextChanged(recognizeTextResponse.text, isRequery: true);
+      } catch (error) {
+        String errorMessage = error.toString();
+        if (error is UniOcrClientError) {
+          errorMessage = error.message;
+        }
+        _isTextDetecting = false;
+        setState(() {});
+        BotToast.showText(text: errorMessage, align: Alignment.center);
+      }
+    }
+  }
+
+  Future<void> _handleExtractTextFromScreenSelection() async {
+    ExtractedData? extractedData = await screenTextExtractor.extract(
+      mode: ExtractMode.screenSelection,
+    );
+
+    await _windowShow();
+    await Future.delayed(const Duration(milliseconds: 10));
+
+    _handleTextChanged(extractedData?.text, isRequery: true);
+  }
+
+  void _handleTextChanged(String? newValue, {bool isRequery = false}) {
+    setState(() {
+      // 移除前后多余的空格
+      _text = (newValue ?? '').trim();
+      // 当使用 Enter 键触发翻译时用空格替换换行符
+      if (Settings.instance.inputSubmitMode == InputSubmitMode.enter) {
+        _text = _text.replaceAll('\n', ' ');
+      }
+    });
+    if (isRequery) {
+      _textEditingController.text = _text;
+      _textEditingController.selection = TextSelection(
+        baseOffset: _text.length,
+        extentOffset: _text.length,
+      );
+      _handleButtonTappedTrans();
+    }
   }
 
   Future<void> _init() async {
@@ -139,18 +477,6 @@ class _MiniTranslatorState extends State<MiniTranslator>
 
     await _windowShow(isShowBelowTray: UniPlatform.isMacOS);
     setState(() {});
-  }
-
-  Future<void> _windowShow({bool isShowBelowTray = false}) async {
-    // TODO: Implement window show
-  }
-
-  Future<void> _windowHide() async {
-    // TODO: Implement window hide
-  }
-
-  void _windowResize() {
-    // TODO: Implement window resize
   }
 
   Future<void> _loadData() async {
@@ -367,341 +693,15 @@ class _MiniTranslatorState extends State<MiniTranslator>
     await Future.wait(_futureList);
   }
 
-  void _handleTextChanged(String? newValue, {bool isRequery = false}) {
-    setState(() {
-      // 移除前后多余的空格
-      _text = (newValue ?? '').trim();
-      // 当使用 Enter 键触发翻译时用空格替换换行符
-      if (Settings.instance.inputSubmitMode == InputSubmitMode.enter) {
-        _text = _text.replaceAll('\n', ' ');
-      }
-    });
-    if (isRequery) {
-      _textEditingController.text = _text;
-      _textEditingController.selection = TextSelection(
-        baseOffset: _text.length,
-        extentOffset: _text.length,
-      );
-      _handleButtonTappedTrans();
-    }
+  Future<void> _windowHide() async {
+    // TODO: Implement window hide
   }
 
-  Future<void> _handleExtractTextFromScreenSelection() async {
-    ExtractedData? extractedData = await screenTextExtractor.extract(
-      mode: ExtractMode.screenSelection,
-    );
-
-    await _windowShow();
-    await Future.delayed(const Duration(milliseconds: 10));
-
-    _handleTextChanged(extractedData?.text, isRequery: true);
+  void _windowResize() {
+    // TODO: Implement window resize
   }
 
-  Future<void> _handleExtractTextFromScreenCapture() async {
-    setState(() {
-      _querySubmitted = false;
-      _text = '';
-      _textDetectedLanguage = null;
-      _capturedData = null;
-      _isTextDetecting = false;
-      _translationResultList = [];
-    });
-    _textEditingController.clear();
-    _focusNode.unfocus();
-
-    await _windowHide();
-
-    String? imagePath;
-    if (!UniPlatform.isWeb) {
-      Directory appDataDirectory = await getAppDirectory();
-      int timestamp = DateTime.now().millisecondsSinceEpoch;
-      String fileName = 'Screenshot-$timestamp.png';
-      imagePath = '${appDataDirectory.path}/Screenshots/$fileName';
-    }
-    _capturedData = await screenCapturer.capture(imagePath: imagePath);
-
-    await _windowShow();
-
-    if (_capturedData == null) {
-      BotToast.showText(
-        text: t.app.home.msg_capture_screen_area_canceled,
-        align: Alignment.center,
-      );
-      setState(() {});
-      return;
-    } else {
-      try {
-        _isTextDetecting = true;
-        setState(() {});
-        String base64Image = base64Encode(_capturedData!.imageBytes!);
-        await Future.delayed(const Duration(milliseconds: 10));
-        RecognizeTextResponse recognizeTextResponse = await sharedOcrClient
-            .use(Settings.instance.defaultOcrEngineId ?? '')
-            .recognizeText(
-              RecognizeTextRequest(
-                imagePath: _capturedData?.imagePath,
-                base64Image: base64Image,
-              ),
-            );
-        _isTextDetecting = false;
-        setState(() {});
-        if (Settings.instance.autoCopyRecognizedText) {
-          Clipboard.setData(ClipboardData(text: recognizeTextResponse.text));
-        }
-        _handleTextChanged(recognizeTextResponse.text, isRequery: true);
-      } catch (error) {
-        String errorMessage = error.toString();
-        if (error is UniOcrClientError) {
-          errorMessage = error.message;
-        }
-        _isTextDetecting = false;
-        setState(() {});
-        BotToast.showText(text: errorMessage, align: Alignment.center);
-      }
-    }
-  }
-
-  Future<void> _handleExtractTextFromClipboard() async {
-    // TODO: Implement window show when not visible
-    ExtractedData? extractedData = await screenTextExtractor.extract(
-      mode: ExtractMode.clipboard,
-    );
-    _handleTextChanged(extractedData?.text, isRequery: true);
-  }
-
-  void _handleButtonTappedClear() {
-    setState(() {
-      _querySubmitted = false;
-      _text = '';
-      _textDetectedLanguage = null;
-      _capturedData = null;
-      _isTextDetecting = false;
-      _translationResultList = [];
-    });
-    _textEditingController.clear();
-    _focusNode.requestFocus();
-  }
-
-  Future<void> _handleButtonTappedTrans() async {
-    if (_text.isEmpty) {
-      BotToast.showText(
-        text: t.app.home.msg_please_enter_word_or_text,
-        align: Alignment.center,
-      );
-      _focusNode.requestFocus();
-      return;
-    }
-    await _queryData();
-  }
-
-  Widget _buildBannersView(BuildContext context) {
-    bool isFoundNewVersion =
-        _latestVersion != null &&
-        _latestVersion!.buildNumber > sharedEnv.appBuildNumber;
-
-    bool isNoAllowedAllAccess =
-        !(_isAllowedScreenCaptureAccess && _isAllowedScreenSelectionAccess);
-
-    return Container(
-      key: _bannersViewKey,
-      width: double.infinity,
-      margin: EdgeInsets.only(
-        bottom: (isFoundNewVersion || isNoAllowedAllAccess) ? 12 : 0,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (isFoundNewVersion)
-            NewVersionFoundBanner(latestVersion: _latestVersion!),
-          if (isNoAllowedAllAccess)
-            LimitedFunctionalityBanner(
-              isAllowedScreenCaptureAccess: _isAllowedScreenCaptureAccess,
-              isAllowedScreenSelectionAccess: _isAllowedScreenSelectionAccess,
-              onTappedRecheckIsAllowedAllAccess: () async {
-                _isAllowedScreenCaptureAccess = await ScreenCapturer.instance
-                    .isAccessAllowed();
-                _isAllowedScreenSelectionAccess = await screenTextExtractor
-                    .isAccessAllowed();
-
-                setState(() {});
-
-                if (_isAllowedScreenCaptureAccess &&
-                    _isAllowedScreenSelectionAccess) {
-                  BotToast.showText(
-                    text: t.app.home.limited_banner_msg_all_access_allowed,
-                    align: Alignment.center,
-                  );
-                } else {
-                  BotToast.showText(
-                    text: t.app.home.limited_banner_msg_all_access_not_allowed,
-                    align: Alignment.center,
-                  );
-                }
-              },
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInputView(BuildContext context) {
-    return SizedBox(
-      key: _inputViewKey,
-      width: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TranslationInputView(
-            focusNode: _focusNode,
-            controller: _textEditingController,
-            onChanged: (newValue) => _handleTextChanged(newValue),
-            capturedData: _capturedData,
-            isTextDetecting: _isTextDetecting,
-            translationMode: Settings.instance.translationMode,
-            onTranslationModeChanged: (newTranslationMode) {
-              context.read<Settings>().update(
-                translationMode: newTranslationMode,
-              );
-            },
-            inputSubmitMode: Settings.instance.inputSubmitMode,
-            onClickExtractTextFromScreenCapture:
-                _handleExtractTextFromScreenCapture,
-            onClickExtractTextFromClipboard: _handleExtractTextFromClipboard,
-            onButtonTappedClear: _handleButtonTappedClear,
-            onButtonTappedTrans: _handleButtonTappedTrans,
-          ),
-          TranslationTargetSelectView(
-            translationMode: Settings.instance.translationMode,
-            isShowSourceLanguageSelector: _isShowSourceLanguageSelector,
-            isShowTargetLanguageSelector: _isShowTargetLanguageSelector,
-            onToggleShowSourceLanguageSelector: (newValue) {
-              setState(() {
-                _isShowSourceLanguageSelector = newValue;
-                _isShowTargetLanguageSelector = false;
-              });
-            },
-            onToggleShowTargetLanguageSelector: (newValue) {
-              setState(() {
-                _isShowSourceLanguageSelector = false;
-                _isShowTargetLanguageSelector = newValue;
-              });
-            },
-            sourceLanguage: _sourceLanguage,
-            targetLanguage: _targetLanguage,
-            onChanged: (newSourceLanguage, newTargetLanguage) {
-              setState(() {
-                _isShowSourceLanguageSelector = false;
-                _isShowTargetLanguageSelector = false;
-                _sourceLanguage = newSourceLanguage;
-                _targetLanguage = newTargetLanguage;
-              });
-              if (_text.isNotEmpty) {
-                _handleButtonTappedTrans();
-              }
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildResultsView(BuildContext context) {
-    final settings = context.watch<Settings>();
-    return TranslationResultsView(
-      viewKey: _resultsViewKey,
-      controller: _scrollController,
-      translationMode: settings.translationMode,
-      querySubmitted: _querySubmitted,
-      text: _text,
-      textDetectedLanguage: _textDetectedLanguage,
-      translationResultList: _translationResultList,
-      onTextTapped: (word) {
-        _handleTextChanged(word, isRequery: true);
-      },
-      doubleClickCopyResult: settings.doubleClickCopyResult,
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return SizedBox(
-      height: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          _buildBannersView(context),
-          _buildInputView(context),
-          _buildResultsView(context),
-        ],
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildToolBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(40),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const ToolbarItemAlwaysOnTop(),
-            Expanded(child: Container()),
-            IconButton.text(
-              onPressed: () {
-                mainWindowController.window.show();
-              },
-              icon: const Icon(
-                FluentIcons.settings_20_regular,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _windowResize());
-    final shortcuts = context.watch<Settings>().boundShortcuts;
-    return CallbackGlobalShortcuts(
-      bindings: {
-        shortcuts.showOrHide.singleActivator: () async {
-          // TODO: Implement window show or hide
-        },
-        shortcuts.hide.singleActivator: () => _windowHide(),
-        shortcuts.extractFromScreenSelection.singleActivator: () =>
-            _handleExtractTextFromScreenSelection(),
-        shortcuts.extractFromScreenCapture.singleActivator: () =>
-            _handleExtractTextFromScreenCapture(),
-        shortcuts.extractFromClipboard.singleActivator: () =>
-            _handleExtractTextFromClipboard(),
-        shortcuts.inputSubmitWithMetaEnter.singleActivator: () {
-          if (Settings.instance.inputSubmitMode != InputSubmitMode.metaEnter) {
-            return;
-          }
-          _handleButtonTappedTrans();
-        },
-      },
-      child: PageScaffold(
-        navigationBar: _buildToolBar(context),
-        child: _buildBody(context),
-      ),
-    );
-  }
-
-  @override
-  Future<void> onProtocolUrlReceived(String url) async {
-    Uri uri = Uri.parse(url);
-    if (uri.scheme != 'beyondtranslate') return;
-
-    if (uri.authority == 'translate') {
-      if (_text.isNotEmpty) _handleButtonTappedClear();
-      String? text = uri.queryParameters['text'];
-      if (text != null && text.isNotEmpty) {
-        _handleTextChanged(text, isRequery: true);
-      }
-    }
-    await _windowShow();
+  Future<void> _windowShow({bool isShowBelowTray = false}) async {
+    // TODO: Implement window show
   }
 }

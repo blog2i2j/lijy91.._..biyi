@@ -1,4 +1,4 @@
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class GeneratingCursor extends StatefulWidget {
   const GeneratingCursor({super.key});
@@ -36,7 +36,7 @@ class _GeneratingCursorState extends State<GeneratingCursor>
         builder: (context, child) {
           return Text(
             '|',
-            style: themeData.typography.base.copyWith(
+            style: themeData.vars.bodyMedium.copyWith(
               height: 1.4,
             ),
           );

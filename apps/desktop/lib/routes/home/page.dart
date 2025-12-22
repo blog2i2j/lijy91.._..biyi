@@ -1,5 +1,6 @@
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
+import '../../widgets/page_scaffold.dart';
 import './tab_homepage.dart';
 import './tab_settings.dart';
 import './tab_vocabulary.dart';

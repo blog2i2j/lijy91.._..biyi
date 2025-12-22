@@ -1,6 +1,6 @@
 import 'package:biyi_app/utils/language_util.dart';
 import 'package:biyi_app/widgets/language_flag_view/language_flag_view.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class LanguageLabel extends StatelessWidget {
   const LanguageLabel(
@@ -18,8 +18,8 @@ class LanguageLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GappedRow(
-      gap: 6,
+    return Row(
+      spacing: 6,
       mainAxisSize: MainAxisSize.min,
       children: [
         LanguageFlagView(

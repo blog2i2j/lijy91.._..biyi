@@ -7,7 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:uikit/uikit.dart' show ThemeMode;
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:uni_platform/uni_platform.dart';
 
 part 'settings_base.g.dart';

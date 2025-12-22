@@ -1,5 +1,5 @@
 import 'package:biyi_app/utils/r.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class TranslationEngineIcon extends StatelessWidget {
   const TranslationEngineIcon(

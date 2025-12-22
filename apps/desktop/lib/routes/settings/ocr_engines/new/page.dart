@@ -10,8 +10,12 @@ import 'package:biyi_app/widgets/ocr_engine_name/ocr_engine_name.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ocr_engine_youdao/ocr_engine_youdao.dart';
 import 'package:provider/provider.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 import 'package:shortid/shortid.dart';
+
+import '../../../../widgets/page_scaffold.dart';
+import '../../../../widgets/preference_list_item.dart';
+import '../../../../widgets/preference_list_section.dart';
 
 class OcrEnginesNewOrEditPage extends StatefulWidget {
   const OcrEnginesNewOrEditPage({
@@ -87,7 +91,7 @@ class _OcrEnginesNewOrEditPageState extends State<OcrEnginesNewOrEditPage> {
           : Text(t.app.ocr_engines_new.title),
       actions: [
         if (widget.editable)
-          Button.primary(
+          Button(
             onPressed: _handleClickOk,
             child: Text(t.ok),
           ),
@@ -137,7 +141,7 @@ class _OcrEnginesNewOrEditPageState extends State<OcrEnginesNewOrEditPage> {
                 ListTile(
                   title: TextField(
                     controller: _textEditingControllerMap[optionKey],
-                    placeholder: Text(optionKey),
+                    placeholder: optionKey,
                     onChanged: (value) {
                       _option[optionKey] = value;
                       setState(() {});

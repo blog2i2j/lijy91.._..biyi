@@ -1,5 +1,5 @@
 import 'package:biyi_app/routes/settings/page.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class TabSettingsScene extends StatelessWidget {
   const TabSettingsScene({super.key});

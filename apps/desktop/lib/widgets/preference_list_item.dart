@@ -1,5 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:deftui/deftui.dart';
 
 class PreferenceListItem extends StatelessWidget {
   const PreferenceListItem({
@@ -31,9 +31,10 @@ class PreferenceListItem extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
         constraints: BoxConstraints(
-          minHeight: subtitle != null ? theme.scaling * 52 : theme.scaling * 32,
+          minHeight: subtitle != null ? 52 : 32,
         ),
-        child: Label(
+        child: Container(
+          padding: EdgeInsets.zero,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -43,8 +44,8 @@ class PreferenceListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 4,
                   children: [
-                    if (title != null) title!.base(),
-                    if (subtitle != null) subtitle!.small().muted(),
+                    if (title != null) title!,
+                    if (subtitle != null) subtitle!,
                   ],
                 ),
               ),
@@ -112,7 +113,7 @@ class RadioListTile<T> extends StatelessWidget {
           ? isChecked
                 ? const Icon(FluentIcons.checkmark_circle_20_filled)
                 : null
-          : Radio(value: isChecked),
+          : Checkbox(value: isChecked, onChanged: (_) => onChanged(value)),
     );
   }
 }
@@ -169,7 +170,7 @@ class ListTileChevron extends StatelessWidget {
     return Icon(
       FluentIcons.chevron_right_20_regular,
       size: 18.0,
-      color: themeData.colorScheme.border,
+      color: themeData.vars.colorBorder,
     );
   }
 }

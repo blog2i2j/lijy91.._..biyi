@@ -1,5 +1,5 @@
 import 'package:biyi_app/models/ext_ocr_engine_config.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class OcrEngineName extends StatelessWidget {
   const OcrEngineName(
@@ -18,7 +18,7 @@ class OcrEngineName extends StatelessWidget {
         children: [
           TextSpan(
             text: ' (${ocrEngineConfig.id})',
-            style: themeData.typography.small.copyWith(
+            style: themeData.vars.bodySmall.copyWith(
               color: Colors.neutral.shade400,
             ),
           ),

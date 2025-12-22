@@ -4,7 +4,7 @@ import 'package:biyi_app/models/models.dart';
 import 'package:biyi_app/models/settings_base.dart';
 import 'package:biyi_app/utils/language_util.dart';
 import 'package:biyi_app/widgets/widgets.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class TranslationResultsView extends StatelessWidget {
@@ -55,7 +55,7 @@ class TranslationResultsView extends StatelessWidget {
               const TextSpan(text: '没有与'),
               TextSpan(
                 text: getLanguageName(textDetectedLanguage!),
-                style: TextStyle(color: themeData.colorScheme.primary),
+                style: TextStyle(color: themeData.vars.colorPrimary),
               ),
               const TextSpan(text: '匹配的翻译目标，'),
               const TextSpan(text: '请添加该语种的翻译目标或切换至手动翻译模式。'),

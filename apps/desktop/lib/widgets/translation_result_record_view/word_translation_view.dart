@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:biyi_app/widgets/sound_play_button/sound_play_button.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
 class WordTranslationView extends StatefulWidget {
@@ -40,8 +40,8 @@ class _WordTranslationViewState extends State<WordTranslationView> {
           bottom: 7,
         ),
         alignment: Alignment.centerLeft,
-        child: GappedRow(
-          gap: 4,
+        child: Row(
+          spacing: 4,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -51,12 +51,12 @@ class _WordTranslationViewState extends State<WordTranslationView> {
                   TextSpan(text: widget.wordTranslation.text),
                 ],
               ),
-              style: themeData.typography.base.copyWith(
+              style: themeData.vars.bodySmall.copyWith(
                 height: 1.4,
               ),
               selectionHeightStyle: ui.BoxHeightStyle.max,
             ),
-            const PrimaryBadge(
+            const Badge(
               child: Text('常见释义'),
             ),
             if ((widget.wordTranslation.audioUrl ?? '').isNotEmpty &&

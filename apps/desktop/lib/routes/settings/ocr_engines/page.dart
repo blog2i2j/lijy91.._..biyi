@@ -7,8 +7,12 @@ import 'package:biyi_app/widgets/widgets.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 import 'package:reorderables/reorderables.dart';
+
+import '../../../widgets/page_scaffold.dart';
+import '../../../widgets/preference_list_item.dart';
+import '../../../widgets/preference_list_section.dart';
 
 class OcrEnginesSettingPage extends StatefulWidget {
   const OcrEnginesSettingPage({super.key});

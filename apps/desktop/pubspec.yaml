@@ -54,13 +54,13 @@ dependencies:
   translation_engine_tencent: ^0.1.6
   translation_engine_youdao: ^0.1.6
   tray_manager: ^0.2.1
-  uikit: 0.1.0
   uni_ocr_client: ^0.1.1
   uni_platform: ^0.1.0
   uni_translate_client: ^0.1.7
   url_launcher: ^6.2.2
   vclibs: ^0.1.0
   nativeapi: ^0.1.0
+  deftui: ^0.1.0
 
 dev_dependencies:
   beyondtranslate_lints: ^0.1.0
@@ -75,10 +75,10 @@ dev_dependencies:
 dependency_overrides:
   cnativeapi:
     path: ../../../../libnativeapi/nativeapi-flutter/packages/cnativeapi
+  deftui:
+    path: ../../../../deftui/deftui-flutter/packages/deftui
   nativeapi:
     path: ../../../../libnativeapi/nativeapi-flutter/packages/nativeapi
-  shadcn_flutter:
-    path: ../../../../owncal/shadcn_flutter
 
 flutter:
   uses-material-design: true

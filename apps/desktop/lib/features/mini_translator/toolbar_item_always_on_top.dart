@@ -1,5 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class ToolbarItemAlwaysOnTop extends StatefulWidget {
   const ToolbarItemAlwaysOnTop({super.key});
@@ -25,14 +25,14 @@ class _ToolbarItemAlwaysOnTopState extends State<ToolbarItemAlwaysOnTop> {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    return IconButton.text(
+    return Button(
       onPressed: () {
         setState(() {
           _isAlwaysOnTop = !_isAlwaysOnTop;
         });
         // window.setAlwaysOnTop(_isAlwaysOnTop);
       },
-      icon: AnimatedContainer(
+      child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.fastOutSlowIn,
         transformAlignment: Alignment.center,
@@ -43,7 +43,7 @@ class _ToolbarItemAlwaysOnTopState extends State<ToolbarItemAlwaysOnTop> {
           _isAlwaysOnTop
               ? FluentIcons.pin_20_filled
               : FluentIcons.pin_20_regular,
-          color: _isAlwaysOnTop ? themeData.colorScheme.primary : null,
+          color: _isAlwaysOnTop ? themeData.vars.colorPrimary : null,
         ),
       ),
     );

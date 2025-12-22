@@ -2,7 +2,7 @@ import 'package:biyi_app/models/ext_translation_engine_config.dart';
 import 'package:biyi_app/models/translation_result_record.dart';
 import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/widgets/translation_engine_icon/translation_engine_icon.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class TranslationEngineTag extends StatefulWidget {
   const TranslationEngineTag({
@@ -46,7 +46,7 @@ class _TranslationEngineTagState extends State<TranslationEngineTag> {
         alignment: Alignment.centerRight,
         child: Container(
           decoration: BoxDecoration(
-            color: themeData.colorScheme.border,
+            color: themeData.vars.colorBorder,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20),
               bottomLeft: Radius.circular(20),
@@ -58,7 +58,7 @@ class _TranslationEngineTagState extends State<TranslationEngineTag> {
             left: 4,
             right: 2,
           ),
-          child: Button.ghost(
+          child: Button(
             onPressed: () {},
             child: AnimatedCrossFade(
               crossFadeState: !_isHovered
@@ -86,7 +86,7 @@ class _TranslationEngineTagState extends State<TranslationEngineTag> {
                     padding: const EdgeInsets.only(left: 4, right: 2),
                     child: Text(
                       _translationEngineConfig!.typeName,
-                      style: themeData.typography.small.copyWith(
+                      style: themeData.vars.bodySmall.copyWith(
                         fontSize: 10,
                       ),
                     ),

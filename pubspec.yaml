@@ -9,7 +9,6 @@ workspace:
   - packages/biyi_advanced_features
   - packages/biyi_api_client
   - packages/lints
-  - packages/uikit
 
 dev_dependencies:
   melos: ^7.3.0

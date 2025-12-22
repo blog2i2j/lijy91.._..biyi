@@ -12,7 +12,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
 class TranslationResultRecordView extends StatelessWidget {
@@ -65,7 +65,7 @@ class TranslationResultRecordView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SpinKitThreeBounce(
-            color: themeData.colorScheme.foreground,
+            color: themeData.vars.colorContent,
             size: 12.0,
           ),
         ],
@@ -170,9 +170,6 @@ class TranslationResultRecordView extends StatelessWidget {
                   ),
               ],
             ),
-            style: themeData.typography.base.copyWith(
-              height: 1.4,
-            ),
             selectionHeightStyle: ui.BoxHeightStyle.max,
           ),
         ),
@@ -223,7 +220,6 @@ class TranslationResultRecordView extends StatelessWidget {
                           if ((definitions[i].name ?? '').isNotEmpty)
                             TextSpan(
                               text: '${definitions[i].name}',
-                              style: themeData.typography.small,
                             ),
                           if ((definitions[i].name ?? '').isNotEmpty)
                             const TextSpan(text: ' '),
@@ -235,9 +231,6 @@ class TranslationResultRecordView extends StatelessWidget {
                         ],
                       ),
                   ],
-                ),
-                style: themeData.typography.base.copyWith(
-                  height: 1.5,
                 ),
                 selectionHeightStyle: ui.BoxHeightStyle.max,
               ),
@@ -258,22 +251,12 @@ class TranslationResultRecordView extends StatelessWidget {
                           for (var tenseValue in (tenses[i].values ?? []))
                             TextSpan(
                               text: ' $tenseValue ',
-                              style: themeData.typography.base.copyWith(
-                                color: themeData.colorScheme.primary,
-                                fontWeight: FontWeight.w500,
-                              ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => onTextTapped(tenseValue),
                             ),
                         ],
-                        style: themeData.typography.small.copyWith(
-                          fontSize: 13,
-                        ),
                       ),
                   ],
-                ),
-                style: themeData.typography.base.copyWith(
-                  height: 1.5,
                 ),
                 selectionHeightStyle: ui.BoxHeightStyle.max,
               ),

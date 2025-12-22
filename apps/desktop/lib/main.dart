@@ -7,6 +7,7 @@ import 'package:biyi_app/states/actions/translate_input_content.dart';
 import 'package:biyi_app/states/settings.dart';
 // import 'package:biyi_app/utils/env.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter/src/widgets/_window.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nativeapi/nativeapi.dart';
@@ -15,7 +16,7 @@ import 'package:nativeapi/nativeapi.dart';
 // import 'package:package_info_plus/package_info_plus.dart';
 // import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:uikit/uikit.dart' hide Image;
+import 'package:deftui/deftui.dart' hide Image;
 import 'package:uni_platform/uni_platform.dart';
 import './features/mini_translator.dart';
 import './router_config.dart';
@@ -128,10 +129,12 @@ class _MainAppState extends State<MainApp> {
     final settings = context.watch<Settings>();
     return RegularWindow(
       controller: mainWindowController,
-      child: ShadcnApp.router(
-        theme: const ThemeData(
-          colorScheme: ColorSchemes.lightBlue,
-          radius: 0.5,
+      child: material.MaterialApp.router(
+        theme: material.ThemeData.light().copyWith(
+          extensions: [ThemeData.light()],
+        ),
+        darkTheme: material.ThemeData.dark().copyWith(
+          extensions: [ThemeData.dark()],
         ),
         routerConfig: routerConfig,
         themeMode: settings.themeMode,

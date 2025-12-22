@@ -1,5 +1,5 @@
 import 'package:biyi_app/models/ext_translation_engine_config.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class TranslationEngineName extends StatelessWidget {
   const TranslationEngineName(
@@ -18,7 +18,7 @@ class TranslationEngineName extends StatelessWidget {
         children: [
           TextSpan(
             text: ' (${translationEngineConfig.id})',
-            style: themeData.typography.small.copyWith(
+            style: themeData.vars.bodySmall.copyWith(
               color: Colors.neutral.shade400,
             ),
           ),

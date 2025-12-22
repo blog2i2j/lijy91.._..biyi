@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:deftui/deftui.dart';
 
 /// Denotes what type of the list section a [CupertinoListSection] is.
 ///
@@ -62,16 +62,12 @@ class PreferenceListSection extends StatelessWidget {
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: theme.colorScheme.card,
-          borderRadius: theme.borderRadiusXl,
-          border: Border.all(color: theme.colorScheme.border),
-          boxShadow: [
-            BoxShadow(
-              color: theme.colorScheme.foreground.withValues(alpha: 0.05),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          color: theme.vars.colorSurfaceMuted,
+          borderRadius: BorderRadius.all(
+            Radius.circular(theme.vars.radiusMedium),
+          ),
+          border: Border.all(color: theme.vars.colorBorder),
+          boxShadow: theme.vars.shadowMd,
         ),
         margin: const EdgeInsets.only(top: 0),
         child: Column(
@@ -84,7 +80,7 @@ class PreferenceListSection extends StatelessWidget {
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: theme.scaling * 8,
+      spacing: 8,
       children: children!,
     );
   }
@@ -112,7 +108,7 @@ class PreferenceListSection extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: header!.large().medium(),
+                child: header!,
               ),
             ),
             if (type == PreferenceListSectionType.base)

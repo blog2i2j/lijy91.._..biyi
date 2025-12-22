@@ -5,8 +5,12 @@ import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 import 'package:uni_platform/uni_platform.dart';
+
+import '../../../widgets/page_scaffold.dart';
+import '../../../widgets/preference_list_item.dart';
+import '../../../widgets/preference_list_section.dart';
 
 class HotKeyDisplayView extends StatelessWidget {
   const HotKeyDisplayView(

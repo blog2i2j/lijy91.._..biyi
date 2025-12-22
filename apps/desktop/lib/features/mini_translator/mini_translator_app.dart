@@ -1,9 +1,10 @@
 // ignore_for_file: implementation_imports, invalid_use_of_internal_member
 
 import 'package:biyi_app/extension/window_controller.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:uikit/uikit.dart';
 import 'package:flutter/src/widgets/_window.dart';
+import 'package:deftui/deftui.dart';
 import 'package:nativeapi/nativeapi.dart';
 import '../../i18n/strings.g.dart';
 import './mini_translator.dart';
@@ -45,14 +46,17 @@ class _MiniTranslatorAppState extends State<MiniTranslatorApp> {
   Widget build(BuildContext context) {
     return RegularWindow(
       controller: miniTranslatorWindowController,
-      child: ShadcnApp(
+      child: material.MaterialApp(
         debugShowCheckedModeBanner: false,
         title: _kMiniTranslatorTitle,
         home: const MiniTranslator(),
-        theme: const ThemeData(
-          colorScheme: ColorSchemes.lightBlue,
-          radius: 0.5,
+        theme: material.ThemeData.light().copyWith(
+          extensions: [ThemeData.light()],
         ),
+        darkTheme: material.ThemeData.dark().copyWith(
+          extensions: [ThemeData.dark()],
+        ),
+        themeMode: material.ThemeMode.system,
         locale: TranslationProvider.of(context).flutterLocale,
         supportedLocales: AppLocaleUtils.supportedLocales,
         localizationsDelegates: GlobalMaterialLocalizations.delegates,

@@ -1,4 +1,4 @@
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
 const kWordImageSize = 74.0;
@@ -20,10 +20,10 @@ class WordImageView extends StatelessWidget {
       width: kWordImageSize,
       height: kWordImageSize,
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.border),
+        border: Border.all(color: Theme.of(context).vars.colorBorder),
         borderRadius: BorderRadius.circular(2),
       ),
-      child: Button.primary(
+      child: Button(
         // padding: EdgeInsets.zero,
         onPressed: onPressed,
         child: Hero(

@@ -4,7 +4,7 @@ import 'package:biyi_app/models/settings_base.dart';
 import 'package:biyi_app/utils/language_util.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class AvailableLanguageSelector extends StatelessWidget {
   const AvailableLanguageSelector({
@@ -38,9 +38,9 @@ class AvailableLanguageSelector extends StatelessWidget {
                     flagSize: 18,
                   );
                   return Button(
-                    style: isSelected
-                        ? ButtonVariance.secondary
-                        : ButtonVariance.ghost,
+                    variant: isSelected
+                        ? ButtonVariant.subtle
+                        : ButtonVariant.plain,
                     onPressed: () => onChanged(supportedLanguage),
                     child: child,
                   );
@@ -112,19 +112,19 @@ class _TranslationTargetSelectViewState
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(
               children: [
-                Button.secondary(
-                  child: GappedRow(
-                    gap: 4,
+                Button(
+                  child: Row(
+                    spacing: 4,
                     children: [
                       LanguageLabel(
                         widget.sourceLanguage,
                         flagSize: 18,
                         flagBorderColor: widget.isShowSourceLanguageSelector
-                            ? themeData.colorScheme.primary
+                            ? themeData.vars.colorPrimary
                             : null,
-                        style: themeData.typography.base.copyWith(
+                        style: themeData.vars.bodyMedium.copyWith(
                           color: widget.isShowSourceLanguageSelector
-                              ? themeData.colorScheme.primary
+                              ? themeData.vars.colorPrimary
                               : null,
                         ),
                       ),
@@ -141,8 +141,8 @@ class _TranslationTargetSelectViewState
                             FluentIcons.chevron_down_20_regular,
                             size: 14,
                             color: widget.isShowSourceLanguageSelector
-                                ? themeData.colorScheme.primary
-                                : themeData.typography.base.color,
+                                ? themeData.vars.colorPrimary
+                                : themeData.vars.colorContent,
                           ),
                         ),
                       ),
@@ -154,7 +154,7 @@ class _TranslationTargetSelectViewState
                     );
                   },
                 ),
-                Button.secondary(
+                Button(
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.fastOutSlowIn,
@@ -176,19 +176,19 @@ class _TranslationTargetSelectViewState
                     );
                   },
                 ),
-                Button.secondary(
-                  child: GappedRow(
-                    gap: 4,
+                Button(
+                  child: Row(
+                    spacing: 4,
                     children: [
                       LanguageLabel(
                         widget.targetLanguage,
                         flagSize: 18,
                         flagBorderColor: widget.isShowTargetLanguageSelector
-                            ? themeData.colorScheme.primary
+                            ? themeData.vars.colorPrimary
                             : null,
-                        style: themeData.typography.base.copyWith(
+                        style: themeData.vars.bodyMedium.copyWith(
                           color: widget.isShowTargetLanguageSelector
-                              ? themeData.colorScheme.primary
+                              ? themeData.vars.colorPrimary
                               : null,
                         ),
                       ),
@@ -205,8 +205,8 @@ class _TranslationTargetSelectViewState
                             FluentIcons.chevron_down_20_regular,
                             size: 14,
                             color: widget.isShowTargetLanguageSelector
-                                ? themeData.colorScheme.primary
-                                : themeData.typography.base.color,
+                                ? themeData.vars.colorPrimary
+                                : themeData.vars.colorContent,
                           ),
                         ),
                       ),

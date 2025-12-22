@@ -2,11 +2,11 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/utils/utils.dart';
 import 'package:biyi_app/widgets/feature_status_icon/feature_status_icon.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:deftui/deftui.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:screen_capturer/screen_capturer.dart';
 import 'package:screen_text_extractor/screen_text_extractor.dart';
-import 'package:uikit/uikit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AllowAccessListItem extends StatelessWidget {
@@ -25,9 +25,9 @@ class AllowAccessListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    return GappedRow(
-      gap: 6,
+    final ThemeData theme = Theme.of(context);
+    return Row(
+      spacing: 6,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
@@ -64,7 +64,7 @@ class AllowAccessListItem extends StatelessWidget {
                               ..onTap = onTappedGoSettings,
                           ),
                       ],
-                      style: themeData.typography.base.copyWith(
+                      style: theme.vars.bodyMedium.copyWith(
                         color: Colors.neutral.shade700,
                         decoration: TextDecoration.underline,
                         decorationThickness: 1.5,
@@ -101,7 +101,7 @@ class LimitedFunctionalityBanner extends StatelessWidget {
 
   Widget _build(BuildContext context) {
     if (_isAllowedAllAccess) return Container();
-    return Banner(
+    return AlertBanner(
       icon: const Icon(FluentIcons.warning_20_regular),
       title: Text.rich(
         TextSpan(
@@ -117,13 +117,13 @@ class LimitedFunctionalityBanner extends StatelessWidget {
                     height: 16,
                     child: MouseRegion(
                       cursor: SystemMouseCursors.click,
-                      child: HoverableArea(
-                        builder: (context, hovered) {
+                      child: HoverableBuilder(
+                        builder: (context, isHovered, child) {
                           return Center(
                             child: Icon(
                               FluentIcons.question_circle_20_regular,
                               size: 14,
-                              color: hovered
+                              color: isHovered
                                   ? Colors.white.withValues(alpha: 0.7)
                                   : Colors.white,
                             ),
@@ -148,8 +148,8 @@ class LimitedFunctionalityBanner extends StatelessWidget {
       ),
       message: Padding(
         padding: const EdgeInsets.only(top: 4, bottom: 2),
-        child: GappedColumn(
-          gap: 6,
+        child: Column(
+          spacing: 6,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AllowAccessListItem(
@@ -190,7 +190,7 @@ class LimitedFunctionalityBanner extends StatelessWidget {
         ),
       ),
       actions: [
-        Button.secondary(
+        Button(
           onPressed: onTappedRecheckIsAllowedAllAccess,
           child: Text(
             t.app.home.limited_banner_btn_check_again,

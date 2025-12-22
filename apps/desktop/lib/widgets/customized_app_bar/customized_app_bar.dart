@@ -1,5 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class CustomizedAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomizedAppBar({
@@ -28,8 +28,8 @@ class CustomizedAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (leadingWidget == null) {
       if (canPop) {
         padding = const EdgeInsets.symmetric(horizontal: 6);
-        leadingWidget = IconButton.ghost(
-          icon: useCloseButton
+        leadingWidget = Button(
+          child: useCloseButton
               ? const Icon(FluentIcons.dismiss_20_regular)
               : const Icon(FluentIcons.chevron_left_24_regular),
           onPressed: () {
@@ -55,16 +55,16 @@ class CustomizedAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             const SizedBox(width: 4),
             DefaultTextStyle(
-              style: themeData.typography.large.copyWith(
+              style: themeData.vars.titleLarge.copyWith(
                 fontWeight: FontWeight.w600,
-                color: themeData.colorScheme.foreground,
+                color: themeData.vars.colorContent,
               ),
               child: title,
             ),
             Expanded(child: Container()),
             if ((actions ?? []).isNotEmpty)
-              GappedRow(
-                gap: 4,
+              Row(
+                spacing: 4,
                 children: actions!,
               ),
           ],

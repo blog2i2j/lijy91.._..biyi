@@ -5,7 +5,7 @@ import 'package:biyi_app/models/settings_base.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:screen_capturer/screen_capturer.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class TranslationInputView extends StatelessWidget {
   const TranslationInputView({
@@ -45,18 +45,18 @@ class TranslationInputView extends StatelessWidget {
 
   Widget _buildToolbarItems(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    return GappedRow(
-      gap: 6,
+    return Row(
+      spacing: 6,
       children: [
         Tooltip(
           message: t.app.home.tip_translation_mode(
             mode: translationMode.displayName,
           ),
-          child: IconButton(
-            variance: translationMode == TranslationMode.auto
-                ? ButtonVariance.primary
-                : ButtonVariance.secondary,
-            icon: Builder(
+          child: Button(
+            variant: translationMode == TranslationMode.auto
+                ? ButtonVariant.filled
+                : ButtonVariant.outlined,
+            child: Builder(
               builder: (context) {
                 return Stack(
                   alignment: Alignment.center,
@@ -67,7 +67,7 @@ class TranslationInputView extends StatelessWidget {
                         bottom: 0,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: themeData.colorScheme.primary,
+                            color: themeData.vars.colorPrimary,
                             borderRadius: BorderRadius.circular(2),
                           ),
                           padding: const EdgeInsets.only(
@@ -106,16 +106,16 @@ class TranslationInputView extends StatelessWidget {
         ),
         Tooltip(
           message: t.app.home.tip_extract_text_from_screen_capture,
-          child: IconButton.secondary(
+          child: Button(
             onPressed: onClickExtractTextFromScreenCapture,
-            icon: const Icon(FluentIcons.crop_20_regular),
+            child: const Icon(FluentIcons.crop_20_regular),
           ),
         ),
         Tooltip(
           message: t.app.home.tip_extract_text_from_clipboard,
-          child: IconButton.secondary(
+          child: Button(
             onPressed: onClickExtractTextFromClipboard,
-            icon: const Icon(FluentIcons.clipboard_text_ltr_20_regular),
+            child: const Icon(FluentIcons.clipboard_text_ltr_20_regular),
           ),
         ),
       ],
@@ -123,19 +123,19 @@ class TranslationInputView extends StatelessWidget {
   }
 
   Widget _buildActionButtons(BuildContext context) {
-    return GappedRow(
-      gap: 8,
+    return Row(
+      spacing: 8,
       children: [
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 56),
-          child: Button.secondary(
+          child: Button(
             onPressed: onButtonTappedClear,
             child: Text(t.app.home.btn_clear),
           ),
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 56),
-          child: Button.primary(
+          child: Button(
             onPressed: onButtonTappedTrans,
             child: Text(t.app.home.btn_trans),
           ),
@@ -171,16 +171,17 @@ class TranslationInputView extends StatelessWidget {
                     top: 14,
                     bottom: 12,
                   ),
-                  style: themeData.typography.base.copyWith(height: 1.2),
-                  placeholder: Text(
-                    t.app.home.input_hint,
-                    style: themeData.typography.base.copyWith(
-                      color: themeData.typography.base.color?.withValues(
-                        alpha: 0.5,
-                      ),
-                      height: 1.2,
-                    ),
-                  ),
+                  style: themeData.vars.bodyMedium.copyWith(height: 1.2),
+                  placeholder: t.app.home.input_hint,
+                  // placeholder: Text(
+                  //   t.app.home.input_hint,
+                  //   style: themeData.vars.bodyMedium.copyWith(
+                  //     color: themeData.vars.bodyMedium.color?.withValues(
+                  //       alpha: 0.5,
+                  //     ),
+                  //     height: 1.2,
+                  //   ),
+                  // ),
                   maxLines: inputSubmitMode == InputSubmitMode.enter ? 1 : 6,
                   minLines: 1,
                   onChanged: onChanged,
@@ -196,21 +197,21 @@ class TranslationInputView extends StatelessWidget {
                     bottom: 0,
                     child: Container(
                       padding: const EdgeInsets.only(left: 12, right: 12),
-                      color: themeData.colorScheme.background,
+                      color: themeData.vars.colorSurface,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Row(
                             children: [
                               SpinKitDoubleBounce(
-                                color: themeData.typography.small.color,
+                                color: themeData.vars.colorPrimary,
                                 size: 18.0,
                               ),
                               const SizedBox(width: 6),
                               Text(
                                 t.app.home.text_extracting_text,
                                 style: TextStyle(
-                                  color: themeData.typography.small.color,
+                                  color: themeData.vars.colorPrimary,
                                   fontSize: 13,
                                 ),
                               ),

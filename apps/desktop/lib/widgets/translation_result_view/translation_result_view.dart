@@ -1,7 +1,7 @@
 import 'package:biyi_app/models/translation_result.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
 
 class TranslationResultView extends StatelessWidget {
   const TranslationResultView(
@@ -38,7 +38,7 @@ class TranslationResultView extends StatelessWidget {
               child: Icon(
                 FluentIcons.arrow_right_20_regular,
                 size: 16,
-                color: themeData.colorScheme.foreground,
+                color: themeData.vars.colorContent,
               ),
             ),
           ),

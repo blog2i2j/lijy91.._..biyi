@@ -9,11 +9,13 @@ import 'package:go_router/go_router.dart';
 import 'package:biyi_app/routes/settings/about/page.dart';
 import 'package:biyi_app/routes/settings/advanced/page.dart';
 import 'package:biyi_app/routes/settings/general/page.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart' hide Colors, DialogRoute;
+import 'package:deftui/deftui.dart' hide Colors;
 import 'package:biyi_app/routes/settings/keybinds/page.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import 'package:biyi_app/i18n/strings.g.dart';
+
+import '../../widgets/page_scaffold.dart';
 
 part 'route.g.dart';
 
@@ -170,18 +172,18 @@ class SettingsLayout extends StatelessWidget {
     return Container(
       decoration: isActive
           ? BoxDecoration(
-              color: theme.colorScheme.primary.withValues(alpha: 0.1),
+              color: theme.vars.colorPrimary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             )
           : null,
-      child: GhostButton(
+      child: Button(
         onPressed: () => context.go(path),
-        trailing: Icon(icon, size: 16),
+        // trailing: Icon(icon, size: 16),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
             title,
-            style: isActive ? theme.typography.semiBold : null,
+            style: isActive ? theme.vars.bodyMedium : null,
           ),
         ),
       ),
@@ -194,17 +196,17 @@ class SettingsLayout extends StatelessWidget {
     final currentPath = GoRouterState.of(context).uri.path;
     final pageTitle = _getPageTitle(currentPath);
 
-    return Scaffold(
+    return PageScaffold(
       child: Row(
         children: [
           // Sidebar
           Container(
             width: 240,
             decoration: BoxDecoration(
-              color: theme.colorScheme.muted.withValues(alpha: 0.3),
+              color: theme.vars.colorSurfaceMuted.withValues(alpha: 0.3),
               border: Border(
                 right: BorderSide(
-                  color: theme.colorScheme.border,
+                  color: theme.vars.colorBorder,
                   width: 1,
                 ),
               ),
@@ -221,8 +223,7 @@ class SettingsLayout extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      GhostButton(
-                        density: ButtonDensity.icon,
+                      Button(
                         onPressed: () => context.go('/'),
                         child: const Icon(
                           FluentIcons.arrow_left_20_regular,
@@ -232,7 +233,7 @@ class SettingsLayout extends StatelessWidget {
                       const SizedBox(width: 12),
                       Text(
                         'Settings',
-                        style: theme.typography.semiBold.copyWith(
+                        style: theme.vars.bodyMedium.copyWith(
                           fontSize: 18,
                         ),
                       ),
@@ -246,11 +247,11 @@ class SettingsLayout extends StatelessWidget {
                     children: [
                       Text(
                         t.app.settings.kLayout.navgroup.client,
-                        style: theme.typography.small.copyWith(
+                        style: theme.vars.bodySmall.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.mutedForeground,
+                          color: theme.vars.colorContentMuted,
                         ),
-                      ).withPadding(horizontal: 12, vertical: 8),
+                      ),
                       _buildNavItem(
                         context,
                         t.app.settings.general.title,
@@ -288,11 +289,11 @@ class SettingsLayout extends StatelessWidget {
                       const SizedBox(height: 16),
                       Text(
                         t.app.settings.kLayout.navgroup.integrations,
-                        style: theme.typography.small.copyWith(
+                        style: theme.vars.bodySmall.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.mutedForeground,
+                          color: theme.vars.colorContentMuted,
                         ),
-                      ).withPadding(horizontal: 12, vertical: 8),
+                      ),
                       _buildNavItem(
                         context,
                         t.app.settings.ocr_engines.title,
@@ -309,11 +310,11 @@ class SettingsLayout extends StatelessWidget {
                       const SizedBox(height: 16),
                       Text(
                         t.app.settings.kLayout.navgroup.resources,
-                        style: theme.typography.small.copyWith(
+                        style: theme.vars.bodySmall.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.mutedForeground,
+                          color: theme.vars.colorContentMuted,
                         ),
-                      ).withPadding(horizontal: 12, vertical: 8),
+                      ),
                       _buildNavItem(
                         context,
                         t.app.settings.about.title,
@@ -341,14 +342,14 @@ class SettingsLayout extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        color: theme.colorScheme.border,
+                        color: theme.vars.colorBorder,
                         width: 1,
                       ),
                     ),
                   ),
                   child: Text(
                     pageTitle,
-                    style: theme.typography.h2,
+                    style: theme.vars.headlineMedium,
                   ),
                 ),
                 Expanded(

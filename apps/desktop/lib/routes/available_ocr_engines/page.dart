@@ -4,7 +4,11 @@ import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:biyi_app/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
+
+import '../../widgets/page_scaffold.dart';
+import '../../widgets/preference_list_item.dart';
+import '../../widgets/preference_list_section.dart';
 
 class AvailableOcrEnginesPage extends StatefulWidget {
   const AvailableOcrEnginesPage({
@@ -56,7 +60,7 @@ class _AvailableOcrEnginesPageState extends State<AvailableOcrEnginesPage> {
     return ListView(
       children: [
         if (_proOcrEngineList.isNotEmpty)
-          ListSection(
+          PreferenceListSection(
             children: [
               for (var ocrEngineConfig in _proOcrEngineList)
                 RadioListTile<String>(
@@ -69,7 +73,7 @@ class _AvailableOcrEnginesPageState extends State<AvailableOcrEnginesPage> {
                 ),
             ],
           ),
-        ListSection(
+        PreferenceListSection(
           header: Text(
             t.app.ocr_engines.private.title,
           ),
@@ -103,7 +107,7 @@ class _AvailableOcrEnginesPageState extends State<AvailableOcrEnginesPage> {
           t.app.ocr_engines.title,
         ),
         actions: [
-          Button.secondary(
+          Button(
             onPressed: _handleClickOk,
             child: Text(t.ok),
           ),

@@ -1,5 +1,7 @@
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
-import 'package:uikit/uikit.dart';
+import 'package:deftui/deftui.dart';
+
+import '../../widgets/page_scaffold.dart';
 
 class TabVocabularyScene extends StatelessWidget {
   const TabVocabularyScene({super.key});
