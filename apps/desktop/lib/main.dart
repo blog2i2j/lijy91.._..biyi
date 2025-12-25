@@ -64,7 +64,7 @@ const _kMainAppTitle = 'Beyond Translate';
 
 final mainWindowController =
     RegularWindowController(
-      preferredSize: const Size(1280, 720),
+      preferredSize: const Size(900, 600),
       title: _kMainAppTitle,
     )..setWillShowHook((window) {
       if (window.isFirstShow) {

@@ -101,7 +101,7 @@ class TranslationResultRecordView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    // final ThemeData themeData = Theme.of(context);
 
     // String? word;
     List<TextTranslation>? translations; // 翻译

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' show Scaffold;
-import 'package:flutter/widgets.dart';
+import 'package:deftui/deftui.dart';
 
 /// A scaffold that provides a page layout.
 ///
@@ -24,7 +24,9 @@ class PageScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: theme.vars.colorSurface,
       appBar: navigationBar,
       body: child,
     );

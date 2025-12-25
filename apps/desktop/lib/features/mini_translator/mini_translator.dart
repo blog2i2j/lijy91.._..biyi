@@ -30,7 +30,6 @@ import 'package:uni_translate_client/uni_translate_client.dart';
 import '../../widgets/page_scaffold.dart';
 import './limited_functionality_banner.dart';
 import './new_version_found_banner.dart';
-import './toolbar_item_always_on_top.dart';
 import './translation_input_view.dart';
 import './translation_results_view.dart';
 import './translation_target_select_view.dart';
@@ -55,6 +54,9 @@ class _MiniTranslatorState extends State<MiniTranslator>
   Brightness _brightness = Brightness.light;
 
   Version? _latestVersion;
+
+  bool _isAlwaysOnTop = false;
+
   bool _isAllowedScreenCaptureAccess = true;
   bool _isAllowedScreenSelectionAccess = true;
 
@@ -313,6 +315,7 @@ class _MiniTranslatorState extends State<MiniTranslator>
   }
 
   PreferredSizeWidget _buildToolBar(BuildContext context) {
+    final theme = Theme.of(context);
     return PreferredSize(
       preferredSize: const Size.fromHeight(40),
       child: Container(
@@ -320,13 +323,36 @@ class _MiniTranslatorState extends State<MiniTranslator>
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const ToolbarItemAlwaysOnTop(),
+            Button(
+              variant: .plain,
+              onPressed: () {
+                setState(() {
+                  _isAlwaysOnTop = !_isAlwaysOnTop;
+                });
+                mainWindowController.window.isAlwaysOnTop = _isAlwaysOnTop;
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.fastOutSlowIn,
+                transformAlignment: Alignment.center,
+                transform: Matrix4.rotationZ(
+                  _isAlwaysOnTop ? 0 : -0.8,
+                ),
+                child: Icon(
+                  _isAlwaysOnTop
+                      ? FluentIcons.pin_20_filled
+                      : FluentIcons.pin_20_regular,
+                  color: _isAlwaysOnTop ? theme.vars.colorPrimary : null,
+                ),
+              ),
+            ),
             Expanded(child: Container()),
-            IconButton(
+            Button(
+              variant: .plain,
               onPressed: () {
                 mainWindowController.window.show();
               },
-              icon: FluentIcons.settings_20_regular,
+              child: Icon(FluentIcons.settings_20_regular),
             ),
           ],
         ),

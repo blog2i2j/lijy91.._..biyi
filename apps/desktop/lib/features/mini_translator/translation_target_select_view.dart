@@ -39,7 +39,7 @@ class AvailableLanguageSelector extends StatelessWidget {
                   );
                   return Button(
                     variant: isSelected
-                        ? ButtonVariant.subtle
+                        ? ButtonVariant.outlined
                         : ButtonVariant.plain,
                     onPressed: () => onChanged(supportedLanguage),
                     child: child,

@@ -1,19 +1,10 @@
+import 'dart:async';
+
 import 'package:deftui/deftui.dart';
+import 'package:flutter/widgets.dart' show WidgetsBinding;
+import 'package:go_router/go_router.dart';
 
 import '../../widgets/page_scaffold.dart';
-import './tab_homepage.dart';
-import './tab_settings.dart';
-import './tab_vocabulary.dart';
-
-const _kHomeTabHomepage = 0;
-
-class TabBarItem extends BottomNavigationBarItem {
-  const TabBarItem({
-    required super.icon,
-    required String super.label,
-    required Widget super.activeIcon,
-  });
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,16 +14,46 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int _selectedIndex = _kHomeTabHomepage;
+  Timer? _redirectTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _redirectTimer = Timer(const Duration(milliseconds: 600), () {
+        if (!mounted) return;
+        context.replace('/settings/general');
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _redirectTimer?.cancel();
+    super.dispose();
+  }
 
   Widget _buildBody(BuildContext context) {
-    return IndexedStack(
-      index: _selectedIndex,
-      children: const [
-        TabHomepageScene(),
-        TabVocabularyScene(),
-        TabSettingsScene(),
-      ],
+    final theme = Theme.of(context);
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 36,
+            height: 36,
+            child: Loader(
+              color: theme.vars.colorPrimary,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Loading...',
+            style: theme.vars.bodyMedium,
+          ),
+        ],
+      ),
     );
   }
 

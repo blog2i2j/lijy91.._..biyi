@@ -54,8 +54,8 @@ class TranslationInputView extends StatelessWidget {
           ),
           child: Button(
             variant: translationMode == TranslationMode.auto
-                ? ButtonVariant.filled
-                : ButtonVariant.outlined,
+                ? .filled
+                : .outlined,
             child: Builder(
               builder: (context) {
                 return Stack(
@@ -129,6 +129,7 @@ class TranslationInputView extends StatelessWidget {
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 56),
           child: Button(
+            variant: ButtonVariant.outlined,
             onPressed: onButtonTappedClear,
             child: Text(t.app.home.btn_clear),
           ),
@@ -136,6 +137,7 @@ class TranslationInputView extends StatelessWidget {
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 56),
           child: Button(
+            variant: ButtonVariant.filled,
             onPressed: onButtonTappedTrans,
             child: Text(t.app.home.btn_trans),
           ),

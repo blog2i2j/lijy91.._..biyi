@@ -84,8 +84,11 @@ class GeneralSettingsRoute extends GoRouteData with $GeneralSettingsRoute {
   const GeneralSettingsRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const GeneralSettingPage();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return const NoTransitionPage<void>(
+      child: GeneralSettingPage(),
+    );
+  }
 }
 
 class KeybindsSettingsRoute extends GoRouteData with $KeybindsSettingsRoute {
@@ -203,7 +206,7 @@ class SettingsLayout extends StatelessWidget {
           Container(
             width: 240,
             decoration: BoxDecoration(
-              color: theme.vars.colorSurfaceMuted.withValues(alpha: 0.3),
+              color: theme.vars.colorSurfaceMuted,
               border: Border(
                 right: BorderSide(
                   color: theme.vars.colorBorder,
@@ -214,33 +217,6 @@ class SettingsLayout extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: Platform.isMacOS ? 52 : 20,
-                    bottom: 20,
-                  ),
-                  child: Row(
-                    children: [
-                      Button(
-                        onPressed: () => context.go('/'),
-                        child: const Icon(
-                          FluentIcons.arrow_left_20_regular,
-                          size: 18,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'Settings',
-                        style: theme.vars.bodyMedium.copyWith(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(height: 1),
                 Expanded(
                   child: ListView(
                     padding: const EdgeInsets.all(16),
