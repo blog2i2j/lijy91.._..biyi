@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:deftui/deftui.dart';
-import 'package:flutter/widgets.dart' show WidgetsBinding;
 import 'package:go_router/go_router.dart';
 
-import '../../widgets/page_scaffold.dart';
+import '../../widgets/ui/page_scaffold.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

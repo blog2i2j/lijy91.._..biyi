@@ -59,18 +59,6 @@ class PreferenceListItem extends StatelessWidget {
   }
 }
 
-class ListTile extends PreferenceListItem {
-  const ListTile({
-    super.key,
-    required super.title,
-    super.subtitle,
-    super.additionalInfo,
-    super.leading,
-    super.trailing,
-    super.onTap,
-  });
-}
-
 class RadioListTile<T> extends StatelessWidget {
   const RadioListTile({
     super.key,

@@ -13,9 +13,8 @@ import 'package:deftui/deftui.dart';
 import 'package:shortid/shortid.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
-import '../../../../widgets/page_scaffold.dart';
-import '../../../../widgets/preference_list_item.dart';
-import '../../../../widgets/preference_list_section.dart';
+import '../../../../widgets/ui/page_scaffold.dart';
+import '../../../../widgets/ui/preference_list_item.dart';
 
 class TranslationEnginesNewOrEditPage extends StatefulWidget {
   const TranslationEnginesNewOrEditPage({

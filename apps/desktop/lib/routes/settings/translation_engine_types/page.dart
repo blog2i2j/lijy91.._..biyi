@@ -1,14 +1,13 @@
 import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/services/translate_client/translate_client.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
-import 'package:biyi_app/widgets/widgets.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:deftui/deftui.dart';
 
-import '../../../widgets/page_scaffold.dart';
-import '../../../widgets/preference_list_item.dart';
-import '../../../widgets/preference_list_section.dart';
+import '../../../widgets/translation_engine_icon/translation_engine_icon.dart';
+import '../../../widgets/ui/page_scaffold.dart';
+import '../../../widgets/ui/preference_list_item.dart';
 
 class TranslationEngineTypesPage extends StatefulWidget {
   const TranslationEngineTypesPage({

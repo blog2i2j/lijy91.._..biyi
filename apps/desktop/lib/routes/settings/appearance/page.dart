@@ -6,9 +6,8 @@ import 'package:flutter/material.dart' show ThemeMode;
 import 'package:provider/provider.dart';
 import 'package:deftui/deftui.dart';
 
-import '../../../widgets/page_scaffold.dart';
-import '../../../widgets/preference_list_item.dart';
-import '../../../widgets/preference_list_section.dart';
+import '../../../widgets/ui/page_scaffold.dart';
+import '../../../widgets/ui/preference_list_item.dart';
 
 const List<double> _kMaxWindowHeightOptions = [700, 800, 900, 1000];
 

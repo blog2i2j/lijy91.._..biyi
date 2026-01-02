@@ -3,9 +3,10 @@ import 'dart:ui' as ui;
 import 'package:biyi_app/models/models.dart';
 import 'package:biyi_app/models/settings_base.dart';
 import 'package:biyi_app/utils/language_util.dart';
-import 'package:biyi_app/widgets/widgets.dart';
 import 'package:deftui/deftui.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import '../../../widgets/translation_result_view/translation_result_view.dart';
+import '../../../widgets/translation_result_record_view/translation_result_record_view.dart';
 
 class TranslationResultsView extends StatelessWidget {
   const TranslationResultsView({

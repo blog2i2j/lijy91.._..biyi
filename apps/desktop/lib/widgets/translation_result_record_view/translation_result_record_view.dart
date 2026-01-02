@@ -7,13 +7,14 @@ import 'package:biyi_app/widgets/translation_result_record_view/word_image_view.
 import 'package:biyi_app/widgets/translation_result_record_view/word_pronunciation_view.dart';
 import 'package:biyi_app/widgets/translation_result_record_view/word_tag_view.dart';
 import 'package:biyi_app/widgets/translation_result_record_view/word_translation_view.dart';
-import 'package:biyi_app/widgets/widgets.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:deftui/deftui.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
+
+import '../generating_cursor/generating_cursor.dart';
 
 class TranslationResultRecordView extends StatelessWidget {
   const TranslationResultRecordView({

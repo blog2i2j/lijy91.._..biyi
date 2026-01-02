@@ -1,7 +1,8 @@
 import 'package:biyi_app/models/translation_result.dart';
-import 'package:biyi_app/widgets/widgets.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:deftui/deftui.dart';
+
+import '../language_label/language_label.dart';
 
 class TranslationResultView extends StatelessWidget {
   const TranslationResultView(

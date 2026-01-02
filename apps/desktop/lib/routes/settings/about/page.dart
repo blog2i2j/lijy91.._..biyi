@@ -4,9 +4,7 @@ import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:deftui/deftui.dart';
 
-import '../../../widgets/page_scaffold.dart';
-import '../../../widgets/preference_list_item.dart';
-import '../../../widgets/preference_list_section.dart';
+import '../../../widgets/ui/page_scaffold.dart';
 
 class AboutSettingPage extends StatefulWidget {
   const AboutSettingPage({super.key});

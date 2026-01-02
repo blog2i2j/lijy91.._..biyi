@@ -6,9 +6,8 @@ import 'package:biyi_app/widgets/ocr_engine_icon/ocr_engine_icon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:deftui/deftui.dart';
 
-import '../../../widgets/page_scaffold.dart';
-import '../../../widgets/preference_list_item.dart';
-import '../../../widgets/preference_list_section.dart';
+import '../../../widgets/ui/page_scaffold.dart';
+import '../../../widgets/ui/preference_list_item.dart';
 
 class OcrEngineTypesPage extends StatefulWidget {
   const OcrEngineTypesPage({

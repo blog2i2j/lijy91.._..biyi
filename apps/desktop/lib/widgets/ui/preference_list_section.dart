@@ -125,13 +125,3 @@ class PreferenceListSection extends StatelessWidget {
   }
 }
 
-class ListSection extends PreferenceListSection {
-  const ListSection({
-    super.key,
-    super.type,
-    super.header,
-    super.footer,
-    super.children,
-    bool hasLeading = true,
-  });
-}

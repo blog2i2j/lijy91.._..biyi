@@ -2,13 +2,14 @@ import 'package:biyi_app/i18n/strings.g.dart';
 import 'package:biyi_app/services/api_client.dart';
 import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
-import 'package:biyi_app/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:deftui/deftui.dart';
 
-import '../../widgets/page_scaffold.dart';
-import '../../widgets/preference_list_item.dart';
-import '../../widgets/preference_list_section.dart';
+import '../../widgets/ocr_engine_icon/ocr_engine_icon.dart';
+import '../../widgets/ocr_engine_name/ocr_engine_name.dart';
+import '../../widgets/ui/page_scaffold.dart';
+import '../../widgets/ui/preference_list_item.dart';
+import '../../widgets/ui/preference_list_section.dart';
 
 class AvailableOcrEnginesPage extends StatefulWidget {
   const AvailableOcrEnginesPage({

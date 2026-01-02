@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:deftui/deftui.dart';
 
-import '../../widgets/page_scaffold.dart';
+import '../../widgets/ui/page_scaffold.dart';
 
 class RecordShortcutPage extends StatefulWidget {
   const RecordShortcutPage({

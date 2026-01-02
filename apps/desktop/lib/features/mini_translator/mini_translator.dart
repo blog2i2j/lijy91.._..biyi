@@ -27,7 +27,7 @@ import 'package:uni_ocr_client/uni_ocr_client.dart';
 import 'package:uni_platform/uni_platform.dart';
 import 'package:uni_translate_client/uni_translate_client.dart';
 
-import '../../widgets/page_scaffold.dart';
+import '../../widgets/ui/page_scaffold.dart';
 import './limited_functionality_banner.dart';
 import './new_version_found_banner.dart';
 import './translation_input_view.dart';

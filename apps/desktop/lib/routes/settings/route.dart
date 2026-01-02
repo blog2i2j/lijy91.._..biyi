@@ -15,7 +15,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import 'package:biyi_app/i18n/strings.g.dart';
 
-import '../../widgets/page_scaffold.dart';
+import '../../widgets/ui/page_scaffold.dart';
 
 part 'route.g.dart';
 
@@ -163,36 +163,6 @@ class SettingsLayout extends StatelessWidget {
     return 'Settings';
   }
 
-  Widget _buildNavItem(
-    BuildContext context,
-    String title,
-    IconData icon,
-    String path,
-  ) {
-    final theme = Theme.of(context);
-    final isActive = GoRouterState.of(context).uri.path == path;
-
-    return Container(
-      decoration: isActive
-          ? BoxDecoration(
-              color: theme.vars.colorPrimary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8),
-            )
-          : null,
-      child: Button(
-        onPressed: () => context.go(path),
-        // trailing: Icon(icon, size: 16),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            title,
-            style: isActive ? theme.vars.bodyMedium : null,
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -202,100 +172,157 @@ class SettingsLayout extends StatelessWidget {
     return PageScaffold(
       child: Row(
         children: [
-          // Sidebar
-          Container(
-            width: 240,
-            decoration: BoxDecoration(
-              color: theme.vars.colorSurfaceMuted,
-              border: Border(
-                right: BorderSide(
-                  color: theme.vars.colorBorder,
-                  width: 1,
-                ),
-              ),
-            ),
+          Sidebar(
+            collapsible: SidebarCollapsible.none,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(16),
+                SidebarContent(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
-                        t.app.settings.kLayout.navgroup.client,
-                        style: theme.vars.bodySmall.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: theme.vars.colorContentMuted,
+                      SidebarGroup(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SidebarGroupLabel(
+                              child: Text(t.app.settings.kLayout.navgroup.client),
+                            ),
+                            SidebarGroupContent(
+                              child: SidebarMenu(
+                                children: [
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon: const Icon(
+                                        FluentIcons.app_generic_20_regular,
+                                      ),
+                                      label: Text(t.app.settings.general.title),
+                                      tooltip: t.app.settings.general.title,
+                                      selected: currentPath == '/settings/general',
+                                      onPressed: () => context.go('/settings/general'),
+                                    ),
+                                  ),
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon: const Icon(
+                                        FluentIcons.style_guide_20_regular,
+                                      ),
+                                      label: Text(t.app.settings.appearance.title),
+                                      tooltip: t.app.settings.appearance.title,
+                                      selected: currentPath == '/settings/appearance',
+                                      onPressed: () =>
+                                          context.go('/settings/appearance'),
+                                    ),
+                                  ),
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon: const Icon(
+                                        FluentIcons.keyboard_20_regular,
+                                      ),
+                                      label: Text(t.app.settings.keybinds.title),
+                                      tooltip: t.app.settings.keybinds.title,
+                                      selected: currentPath == '/settings/keybinds',
+                                      onPressed: () => context.go('/settings/keybinds'),
+                                    ),
+                                  ),
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon: const Icon(
+                                        FluentIcons.local_language_20_regular,
+                                      ),
+                                      label: Text(t.app.settings.language.title),
+                                      tooltip: t.app.settings.language.title,
+                                      selected: currentPath == '/settings/language',
+                                      onPressed: () => context.go('/settings/language'),
+                                    ),
+                                  ),
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon: const Icon(
+                                        FluentIcons.settings_20_regular,
+                                      ),
+                                      label: Text(t.app.settings.advanced.title),
+                                      tooltip: t.app.settings.advanced.title,
+                                      selected: currentPath == '/settings/advanced',
+                                      onPressed: () => context.go('/settings/advanced'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.general.title,
-                        FluentIcons.app_generic_20_regular,
-                        '/settings/general',
-                      ),
-                      const SizedBox(height: 4),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.appearance.title,
-                        FluentIcons.style_guide_20_regular,
-                        '/settings/appearance',
-                      ),
-                      const SizedBox(height: 4),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.keybinds.title,
-                        FluentIcons.keyboard_20_regular,
-                        '/settings/keybinds',
-                      ),
-                      const SizedBox(height: 4),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.language.title,
-                        FluentIcons.local_language_20_regular,
-                        '/settings/language',
-                      ),
-                      const SizedBox(height: 4),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.advanced.title,
-                        FluentIcons.settings_20_regular,
-                        '/settings/advanced',
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        t.app.settings.kLayout.navgroup.integrations,
-                        style: theme.vars.bodySmall.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: theme.vars.colorContentMuted,
+                      const SizedBox(height: 8),
+                      SidebarGroup(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SidebarGroupLabel(
+                              child: Text(
+                                t.app.settings.kLayout.navgroup.integrations,
+                              ),
+                            ),
+                            SidebarGroupContent(
+                              child: SidebarMenu(
+                                children: [
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon: const Icon(FluentIcons.scan_20_regular),
+                                      label: Text(t.app.settings.ocr_engines.title),
+                                      tooltip: t.app.settings.ocr_engines.title,
+                                      selected: currentPath == '/settings/ocr-engines',
+                                      onPressed: () =>
+                                          context.go('/settings/ocr-engines'),
+                                    ),
+                                  ),
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon:
+                                          const Icon(FluentIcons.translate_20_regular),
+                                      label: Text(
+                                        t.app.settings.translation_engines.title,
+                                      ),
+                                      tooltip:
+                                          t.app.settings.translation_engines.title,
+                                      selected: currentPath ==
+                                          '/settings/translation-engines',
+                                      onPressed: () => context.go(
+                                        '/settings/translation-engines',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.ocr_engines.title,
-                        FluentIcons.scan_20_regular,
-                        '/settings/ocr-engines',
-                      ),
-                      const SizedBox(height: 4),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.translation_engines.title,
-                        FluentIcons.translate_20_regular,
-                        '/settings/translation-engines',
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        t.app.settings.kLayout.navgroup.resources,
-                        style: theme.vars.bodySmall.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: theme.vars.colorContentMuted,
+                      const SizedBox(height: 8),
+                      SidebarGroup(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SidebarGroupLabel(
+                              child: Text(t.app.settings.kLayout.navgroup.resources),
+                            ),
+                            SidebarGroupContent(
+                              child: SidebarMenu(
+                                children: [
+                                  SidebarMenuItem(
+                                    child: SidebarMenuButton(
+                                      icon: const Icon(FluentIcons.info_20_regular),
+                                      label: Text(t.app.settings.about.title),
+                                      tooltip: t.app.settings.about.title,
+                                      selected: currentPath == '/settings/about',
+                                      onPressed: () => context.go('/settings/about'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      _buildNavItem(
-                        context,
-                        t.app.settings.about.title,
-                        FluentIcons.info_20_regular,
-                        '/settings/about',
                       ),
                     ],
                   ),

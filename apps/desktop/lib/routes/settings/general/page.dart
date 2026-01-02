@@ -4,7 +4,6 @@ import 'package:biyi_app/models/translation_target.dart';
 import 'package:biyi_app/services/api_client.dart';
 import 'package:biyi_app/states/settings.dart';
 import 'package:biyi_app/widgets/customized_app_bar/customized_app_bar.dart';
-import 'package:biyi_app/widgets/widgets.dart';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:go_router/go_router.dart';
@@ -12,9 +11,13 @@ import 'package:provider/provider.dart';
 import 'package:deftui/deftui.dart';
 import 'package:uni_platform/uni_platform.dart';
 
-import '../../../widgets/page_scaffold.dart';
-import '../../../widgets/preference_list_item.dart';
-import '../../../widgets/preference_list_section.dart';
+import '../../../widgets/language_label/language_label.dart';
+import '../../../widgets/ocr_engine_icon/ocr_engine_icon.dart';
+import '../../../widgets/ocr_engine_name/ocr_engine_name.dart';
+import '../../../widgets/translation_engine_icon/translation_engine_icon.dart';
+import '../../../widgets/translation_engine_name/translation_engine_name.dart';
+import '../../../widgets/ui/page_scaffold.dart';
+import '../../../widgets/ui/preference_list_item.dart';
 
 class GeneralSettingPage extends StatefulWidget {
   const GeneralSettingPage({super.key});
